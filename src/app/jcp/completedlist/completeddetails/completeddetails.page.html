@@ -1,0 +1,80 @@
+<ion-header [translucent]="true" class="ion-no-border ion-details-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding">Completed Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="bgWrapp fillingListWrapp detailsCardwrapp">
+
+  <ion-card>
+    <ion-card-content>
+      <ion-item lines="none" class="list-item ion-no-padding">
+        <ion-avatar slot="start" class="avatar-icon">
+          <ion-img src="../../assets/images/completed-truck-icon.svg"></ion-img>
+        </ion-avatar>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="7">
+              <div class="ion-col-border-right">
+                <ion-text>
+                <h4>TS12345674</h4>
+                <p>Truck Number</p>
+                </ion-text>
+              </div>
+            </ion-col>
+            <ion-col size="5">
+              <div class="truckTypeLeft">
+                <ion-text>
+                <h4 class="secondaryColor">3XL</h4>
+                <p> Truck Type</p>
+                </ion-text>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <div class="detailsCardBlock">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-text>
+              <h6>Filling Location</h6>
+              <h4>Dubai</h4>
+              </ion-text>
+           </ion-item>
+           
+          <ion-item lines="none">
+            <ion-text>
+              <h6>Entry</h6>
+              <h4>08-12-2023 11:26 </h4>
+              </ion-text>
+           </ion-item>
+           
+           <ion-item lines="none">
+            <ion-text>
+              <h6>Sand Filling</h6>
+              <h4>08-12-2023 11:26 </h4>
+              </ion-text>
+           </ion-item>
+
+           <ion-item lines="none">
+            <ion-text>
+              <h6>Exit</h6>
+              <h4>08-12-2023 11:26 </h4>
+              </ion-text>
+           </ion-item>
+
+         
+        </ion-list>
+
+      </div>
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>
+
+

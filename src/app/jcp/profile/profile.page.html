@@ -1,0 +1,59 @@
+<ion-header [translucent]="true"  class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-float-left">Profile List</ion-title>
+    <app-headerbuttons></app-headerbuttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bgWrapp porfileWrapp m-top">
+  <div class="porfileUserblock">
+    <div class="porfilePosition">
+      <ion-icon class="personIcon" name="person-outline"></ion-icon>
+      <ion-button class="editBt"><ion-img src="../../assets/images/edit-icon.svg"></ion-img></ion-button>
+    </div>
+  </div>
+
+  <ion-card>
+    <div class="porfileCardSapce">
+     <ion-text>
+        <h1>Mahammad Shaik</h1>
+        <h6>JCB Driver</h6>
+      </ion-text>
+
+
+      <ion-button fill="solid" shape="round" expand="block" class="whiteBt" routerLink="/">Change Password</ion-button>
+      <div class="changeLanguageRadio">
+        <h4>Change Language</h4>
+        <ion-radio-group [value]="selectedLang">
+          <div class="selectedLangRadio">
+            <ion-item lines="none" class="no-ripple">
+              <ion-label>English</ion-label>
+              <ion-radio value="en"></ion-radio>
+            </ion-item>
+          </div>
+
+          <div class="selectedLangRadio">
+            <ion-item lines="none" class="no-ripple">
+              <ion-label>Arabic</ion-label>
+              <ion-radio value="ar"></ion-radio>
+            </ion-item>
+          </div>
+        </ion-radio-group>
+      </div>
+
+
+    </div>
+
+
+      <ion-buttons class="logoutBlock">
+        <ion-button>
+          <ion-icon name="log-out-outline"> </ion-icon> Logout
+        </ion-button>
+      </ion-buttons>
+
+
+  </ion-card>
+</ion-content>
+
+
+<app-fotterbuttons></app-fotterbuttons>

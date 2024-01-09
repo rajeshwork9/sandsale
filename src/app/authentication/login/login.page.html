@@ -1,0 +1,24 @@
+
+<ion-content [fullscreen]="true" class="ion-login" [scrollEvents]="false">
+  <div class="loginwrapp">
+    <ion-img class="logingLogo" src="../../../assets/images/sandsale-logo.svg" alt="Logo"></ion-img>
+    <ion-card>
+      <h1 class="ion-text-center">Login </h1>
+      <form>
+        <ion-item lines="none">
+          <ion-input type="text" placeholder="Enter User Name"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-input type="password" placeholder="Enter Password"></ion-input>
+        </ion-item>
+
+
+        <ion-text class="forgotPassword" [routerLink]="['/forgotpassword']">Forgot
+          Password?</ion-text>
+        <ion-button slot="primary" fill="solid" shape="round" expand="block" [routerLink]="['/home']"> Login </ion-button>
+      </form>
+    </ion-card>
+  </div>
+</ion-content>
+

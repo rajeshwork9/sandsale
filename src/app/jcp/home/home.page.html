@@ -1,0 +1,60 @@
+<ion-header [translucent]="true"  class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-float-left">Filling List</ion-title>
+    <app-headerbuttons></app-headerbuttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="bgWrapp fillingListWrapp">
+  <div class=" ">
+    <ion-card>
+      <ion-card-content>
+        <ion-item class="list-item ion-no-padding">
+          <ion-avatar slot="start" class="avatar-icon">
+            <ion-img src="../../assets/images/filling-truck-icon.svg"></ion-img>
+          </ion-avatar>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="7">
+                <div class="ion-col-border-right">
+                  <ion-text>
+                  <h4>TS12345674</h4>
+                  <p>Truck Number</p>
+                  </ion-text>
+                </div>
+              </ion-col>
+              <ion-col size="5">
+                <div class="truckTypeLeft">
+                  <ion-text>
+                  <h4 class="secondaryColor">3XL</h4>
+                  <p> Truck Type</p>
+                  </ion-text>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+  
+        <div class="item-Bottom-Text">
+          <div class="ion-float-left ">
+            <ion-icon name="calendar-outline"></ion-icon>
+            08-12-2023 11:30
+          </div>
+          <div class="ion-float-right">
+            <ion-button class="ion-padding-end" color="primary"  fill="solid" shape="round">Filling</ion-button>
+            <ion-button color="secondary" fill="solid" shape="round">Reject</ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+
+  
+  </div>
+</ion-content>
+
+
+<app-fotterbuttons></app-fotterbuttons>
+
+
+ 
