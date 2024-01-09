@@ -125,15 +125,16 @@ body {
 }
 
 .fillingListWrapp {
+    ion-card-content{    padding: 10px;}
 
     p {
-        font-size: 0.85rem;
+        font-size:0.75rem;
         color: #7B8994;
         margin: 0px;
     }
 
     h4 {
-        font-size: 1rem;
+        font-size:0.875rem;
         font-weight: 700;
         color: #116E99;
     }
@@ -156,17 +157,18 @@ body {
     ion-button {
         min-height: 33px;
         letter-spacing: 0.5px;
-        --padding-start: 1rem;
-        --padding-end: 1rem;
+        --padding-start:0.9rem;
+        --padding-end:0.9rem;
         text-transform: capitalize;
+        font-size:0.813rem;
     }
 
     ion-avatar {
-        margin-right: 5px;
+        margin-right:0px;
         background-color: #E6F0FE;
         vertical-align: middle;
-        width: 50px;
-        height: 50px;
+        width:46px;
+        height: 46px;
         display: flex;
 
         ion-img {
@@ -186,7 +188,7 @@ body {
 
         ion-icon {
             font-size: 1rem;
-            margin-right: 4px;
+            margin-right: 2px;
         }
     }
 
@@ -197,7 +199,7 @@ body {
     }
 
     .ion-padding-end {
-        padding-right: 6px;
+        padding-right:2px;
     }
 
 }
@@ -216,7 +218,9 @@ ion-header {
 
     ion-title {
         color: #fff;
-        padding-top: 5px;
+        font-size:0.938rem;
+        font-weight:600;
+        padding-top: 10px;
     }
 
     ion-text {
@@ -237,6 +241,7 @@ ion-header {
         --padding-top: 0px;
         --padding-bottom: 0px;
         margin-right: 8px;
+     
 
         ion-img {
             width: 20px;
@@ -278,12 +283,12 @@ ion-header {
         background-color: #fff;
         border-radius: 6px;
         box-shadow: 0rem 0.1rem 0.4rem rgb(101 147 160 / 40%) !important;
-        padding: 19px 10px;
-        height: 70px;
+        padding: 14px 10px;
+        height:60px;
 
         ion-img {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height:32px;
             margin: auto;
         }
 
