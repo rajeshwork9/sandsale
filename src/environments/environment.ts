@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl:"",
+  apiUrl: "https://rpwebapps.us/clients/sandsale/api/v1/",
   imgUrl:"",
   production: false
 };
