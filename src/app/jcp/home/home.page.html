@@ -91,5 +91,43 @@
   </ng-template>
 </ion-modal>
 
+<ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false" class="locationModalWrapp">
+  <ng-template>
+    <ion-content class="ion-padding-no">
+      <div class="ion-modal-heading fillingListWrapp">
+        <ion-item class="list-item ion-no-padding" lines="none">
+          <ion-avatar slot="start" class="avatar-icon">
+            <ion-img src="../../assets/images/map-icon.svg"></ion-img>
+          </ion-avatar>
+          <ion-text>
+            <h4>Location</h4>
+          </ion-text>
+        </ion-item>
+      </div>
+
+
+      <div class="contentBlockModal">
+        <div class="">
+          <ion-label>Location</ion-label>
+          <ion-item lines="none">
+            <ion-select aria-label="Location" placeholder="Select Location" (ionChange)="onLocationChange($event)" >
+              <ion-select-option *ngFor="let data of locationData" value="{{data.id}}" >{{data.location_name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </div>
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button color="medium" fill="outline" shape="round" (click)="setOpen(false)">Close</ion-button>
+          <ion-button color="primary" fill="outline" shape="round" (click)="setOpen(false)">Submit</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-template>
+</ion-modal>
+
 
  

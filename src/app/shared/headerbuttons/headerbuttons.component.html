@@ -28,10 +28,8 @@
         <div class="">
           <ion-label>Location</ion-label>
           <ion-item lines="none">
-            <ion-select aria-label="Location" placeholder="Select Location">
-              <ion-select-option value="location1">Location1</ion-select-option>
-              <ion-select-option value="location2">Location2</ion-select-option>
-              <ion-select-option value="location3">Location3</ion-select-option>
+            <ion-select aria-label="Location" placeholder="Select Location" (ionChange)="onLocationChange($event)" >
+              <ion-select-option *ngFor="let data of locationData" value="{{data.id}}" >{{data.location_name}}</ion-select-option>
             </ion-select>
           </ion-item>
         </div>
