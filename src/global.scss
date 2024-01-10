@@ -155,12 +155,12 @@ body {
     }
 
     ion-button {
-        min-height: 33px;
+        min-height:28px;
         letter-spacing: 0.5px;
         --padding-start:0.9rem;
         --padding-end:0.9rem;
         text-transform: capitalize;
-        font-size:0.813rem;
+        font-size:0.75rem;
     }
 
     ion-avatar {
@@ -220,22 +220,22 @@ ion-header {
         color: #fff;
         font-size:0.938rem;
         font-weight:600;
-        padding-top: 10px;
+        padding-top:8px;
     }
 
     ion-text {
         font-size: 0.8rem;
         color: #fff;
         margin-right: 7px;
-        margin-top: 10px;
+        margin-top:9px;
     }
 
     ion-button {
         --border: none;
         --border-radius: 50%;
         --background: #fff;
-        width: 32px;
-        min-height: 32px;
+        width:28px;
+        min-height:28px;
         --padding-start: 0px;
         --padding-end: 0px;
         --padding-top: 0px;
@@ -244,11 +244,11 @@ ion-header {
      
 
         ion-img {
-            width: 20px;
+            width:16px;
         }
 
         .filterIcon {
-            width: 17px;
+            width: 13px;
         }
     }
 
@@ -343,21 +343,21 @@ ion-header {
     }
 
     .porfileCardSapce {
-        padding: 70px 25px 40px 25px;
+        padding:51px 25px 30px 25px;
     }
 
     h1 {
         font-size: 1.2rem;
         color: #31385B;
         font-weight: 600;
-        margin: 0px;
+        margin-top: 10px;
     }
 
     h6 {
         font-size: 0.9rem;
         color: #31385B;
         font-weight: 400;
-        margin: 5px 0px 30px 0px;
+        margin: 5px 0px 22px 0px;
     }
 
     h4 {
@@ -368,7 +368,7 @@ ion-header {
     }
 
     .changeLanguageRadio {
-        margin-top: 60px;
+        margin-top: 30px;
 
         ion-radio-group {
             margin-top: 10px;
@@ -436,7 +436,7 @@ ion-header {
     
         .personIcon {
             border-radius: 50%;
-            padding: 25px;
+            padding:19px;
             border: 3px solid #F1F6FD;
             font-size: 41px;
             background: #fff;
@@ -473,7 +473,5 @@ ion-header {
 }
 
 ion-modal{
-    h4{margin:0px 0px 2px 0px;}
-
-    
+    h4{margin:0px 0px 2px 0px;}    
 }

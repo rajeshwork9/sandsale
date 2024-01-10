@@ -1,40 +1,85 @@
 <div class="ion-float-right ion-header-Right">
   <ion-text class="ion-float-left">Dubai</ion-text>
   <ion-button (click)="setOpen(true)"><ion-img src="../../assets/images/map-icon.svg"></ion-img></ion-button>
-  <ion-button><ion-img class="filterIcon" src="../../assets/images/filter-icon.svg"></ion-img></ion-button>
+  <ion-button (click)="setFilterOpen(true)"><ion-img class="filterIcon" src="../../assets/images/filter-icon.svg"></ion-img></ion-button>
 </div>
 
 
 
 
  
-  <ion-modal [isOpen]="isModalOpen">
-    <ng-template> 
-      <ion-content class="ion-padding">
-        <div class="ion-modal-heading fillingListWrapp">
-          <ion-item class="list-item ion-no-padding" lines="none">
-            <ion-avatar slot="start" class="avatar-icon">
-              <ion-img src="../../assets/images/filling-truck-icon.svg"></ion-img>
-            </ion-avatar>
-            <ion-text>
-              <h4>TS12345674</h4>
-              <p>Truck Number</p>
-            </ion-text>
-          </ion-item>
-        </div>
-        <ion-list>
-          <ion-item>
-            <ion-input label="Floating label" labelPlacement="floating" placeholder="Location"></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-content>
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template> 
+    <ion-content class="ion-padding">
+      <div class="ion-modal-heading fillingListWrapp">
+        <ion-item class="list-item ion-no-padding" lines="none">
+          <ion-avatar slot="start" class="avatar-icon">
+            <ion-img src="../../assets/images/map-icon.svg"></ion-img>
+          </ion-avatar>
+          <ion-text>
+            <h4>Location</h4>            
+          </ion-text>
+        </ion-item>
+      </div>
+   
+        
+      <div class="contentBlockModal">          
+          <ion-select label="Select Location" label-placement="floating" fill="outline">
+            <ion-select-option value="location1">Location-1</ion-select-option>
+            <ion-select-option value="location2">Location-2</ion-select-option>
+            <ion-select-option value="location3">Location-3</ion-select-option>
+          </ion-select>
+      </div>
+    </ion-content>
 
-      <ion-footer>
-        <ion-toolbar>         
-          <ion-buttons slot="end">
-            <ion-button (click)="setOpen(false)">Close</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-footer>      
-    </ng-template>
-  </ion-modal>
+    <ion-footer>
+      <ion-toolbar>         
+        <ion-buttons slot="end">
+          <ion-button (click)="setOpen(false)">Close</ion-button>
+          <ion-button color="primary" class="submitClass" (click)="setOpen(false)">Submit</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>      
+  </ng-template>
+</ion-modal>
+
+<ion-modal [isOpen]="isFilterModalOpen">
+  <ng-template> 
+    <ion-content class="ion-padding">
+      <div class="ion-modal-heading fillingListWrapp">
+        <ion-item class="list-item ion-no-padding" lines="none">
+          <ion-avatar slot="start" class="avatar-icon">
+            <ion-img src="../../assets/images/filling-truck-icon.svg"></ion-img>
+          </ion-avatar>
+          <ion-text>
+            <h4>Filter</h4>              
+          </ion-text>
+        </ion-item>
+      </div>
+   
+        
+      <div class="contentBlockModal">  
+        <ion-item>        
+          <ion-input label="Outline input" label-placement="Enter truck number" fill="outline" placeholder="Enter truck number"></ion-input>
+        </ion-item>
+
+        <ion-item>        
+          <ion-select label="Select Location" label-placement="floating" fill="outline">
+            <ion-select-option value="location1">Location-1</ion-select-option>
+            <ion-select-option value="location2">Location-2</ion-select-option>
+            <ion-select-option value="location3">Location-3</ion-select-option>
+          </ion-select>
+          </ion-item>
+</div>
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>         
+        <ion-buttons slot="end">
+          <ion-button (click)="setFilterOpen(false)">Close</ion-button>
+          <ion-button color="primary" class="submitClass" (click)="setFilterOpen(false)">Submit</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>      
+  </ng-template>
+</ion-modal>
