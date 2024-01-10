@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  isRejectionModalOpen = false;
+
+  setRejectionOpen(isOpen: boolean) {
+    this.isRejectionModalOpen = isOpen;
+  }
 
   constructor() { }
 

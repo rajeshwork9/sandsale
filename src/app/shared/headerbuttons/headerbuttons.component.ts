@@ -8,7 +8,7 @@ import { IonModal } from '@ionic/angular';
   styleUrls: ['./headerbuttons.component.scss'],
 })
 export class HeaderbuttonsComponent  implements OnInit {
-  isModalOpen = true;
+  isModalOpen = false;
   isFilterModalOpen=false;
 
   setOpen(isOpen: boolean) {
