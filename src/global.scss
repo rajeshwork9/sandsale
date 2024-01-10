@@ -160,7 +160,7 @@ body {
         --padding-start:0.9rem;
         --padding-end:0.9rem;
         text-transform: capitalize;
-        font-size:0.75rem;
+        font-size:0.65rem;
     }
 
     ion-avatar {
@@ -263,7 +263,7 @@ ion-header {
 
     ion-text {
         color: #073C51;
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         text-align: center;
         margin-top: 5px;
         display: block;
@@ -391,7 +391,11 @@ ion-header {
 
         ion-button {
             font-size: 1rem;
-            --color: #116E99;
+            --padding-start:25px;
+            --padding-end:25px;
+            --padding-top:9px;
+            --padding-bottom:9px;
+           
             font-weight: 600;
             text-transform: capitalize;
         }
@@ -488,16 +492,19 @@ ion-modal {
         margin-bottom: 20px;
         padding-left: 15px;
         padding-right: 15px;
-        padding-top: 12px;
+        padding-top:7px;
         padding-bottom: 5px;
 
         h4 {
             font-size: 1rem;
+            margin: 0px;
+            padding: 0px;
         }
 
         ion-avatar {
             margin-right: 10px;
             margin-top: 0px;
+            margin-bottom: 0px;
             width: 38px;
             height: 38px;
 
@@ -519,7 +526,7 @@ ion-modal {
         padding-right: 15px;
 
         ion-label {
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             color: #7B8994;
             margin-left: 7px;
         }

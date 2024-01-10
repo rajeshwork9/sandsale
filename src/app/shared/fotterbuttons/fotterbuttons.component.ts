@@ -1,14 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
 @Component({
   selector: 'app-fotterbuttons',
   templateUrl: './fotterbuttons.component.html',
   styleUrls: ['./fotterbuttons.component.scss'],
 })
-export class FotterbuttonsComponent  implements OnInit {
+export class FotterbuttonsComponent implements OnInit {
+  currentRoute: any;
+  constructor(private router: Router) {}
 
-  constructor() { }
-
-  ngOnInit() {}
-
+  ngOnInit() {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentRoute = event.url;
+      });
+  }
 }
+
