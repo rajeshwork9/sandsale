@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthenticationService } from './services/authentication.service';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./jcp/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./jcp/home/home.module').then( m => m.HomePageModule),
+    canActivate: [AuthenticationService]
   },
   {
     path: 'profile',

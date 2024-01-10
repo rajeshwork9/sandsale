@@ -4,19 +4,30 @@
     <ion-img class="logingLogo" src="../../../assets/images/sandsale-logo.svg" alt="Logo"></ion-img>
     <ion-card>
       <h1 class="ion-text-center">Login </h1>
-      <form>
+      <form [formGroup]="loginForm" >
         <ion-item lines="none">
-          <ion-input type="text" placeholder="Enter User Name"></ion-input>
+          <ion-input type="text" placeholder="Enter User Name" formControlName="email"
+          [ngClass]="{ 'is-invalid': (submitted && form['email'].errors) || (form['email'].touched && form['email'].errors) }"></ion-input>
         </ion-item>
+        <div *ngIf="submitted||(form['email'].touched && form['email'].invalid)">
+          <small class="form-text error-message" *ngIf="form['email'].errors"> Email is required</small>
+          <small class="form-text error-message" *ngIf="form['email'].errors?.['pattern']"> Please enter valid email
+            id</small>
+        </div>
 
         <ion-item lines="none">
-          <ion-input type="password" placeholder="Enter Password"></ion-input>
+          <ion-input type="password" placeholder="Enter Password" formControlName="password"
+          [ngClass]="{ 'is-invalid': (submitted && form['password'].errors) || (form['password'].touched && form['password'].errors) }"></ion-input>
         </ion-item>
+
+        <div class="inputError" *ngIf="submitted||(form['password'].touched && form['password'].invalid)">
+          <small class="form-text error-message" *ngIf="form['password'].errors"> Password is required</small>
+        </div>
 
 
         <ion-text class="forgotPassword" [routerLink]="['/forgotpassword']">Forgot
           Password?</ion-text>
-        <ion-button slot="primary" fill="solid" shape="round" expand="block" [routerLink]="['/home']"> Login </ion-button>
+        <ion-button slot="primary" fill="solid" shape="round" expand="block"  (click)="onSubmit()"> Login </ion-button>
       </form>
     </ion-card>
   </div>
