@@ -23,11 +23,11 @@
         <div class="inputError" *ngIf="submitted||(form['password'].touched && form['password'].invalid)">
           <small class="form-text error-message" *ngIf="form['password'].errors"> Password is required</small>
         </div>
+        <ion-text class="forgotPassword "></ion-text>
 
-
-        <ion-text class="forgotPassword" [routerLink]="['/forgotpassword']">Forgot
-          Password?</ion-text>
-        <ion-button slot="primary" fill="solid" shape="round" expand="block"  (click)="onSubmit()"> Login </ion-button>
+        <!-- <ion-text class="forgotPassword" [routerLink]="['/forgotpassword']">Forgot
+          Password?</ion-text> -->
+        <ion-button class="" slot="primary" fill="solid" shape="round" expand="block" (click)="onSubmit()"> Login </ion-button>
       </form>
     </ion-card>
   </div>

@@ -70,6 +70,14 @@ body {
     --background: url('assets/images/bgimg.png') no-repeat center left / cover;
 }
 
+small.error-message{
+    font-size: 0.7rem;
+    color: #CF1E2F;
+    padding-left: 10px;
+    padding-top: 8px;
+    display: block;
+}
+
 .loginwrapp {
     width: 90%;
     margin: auto;
@@ -104,6 +112,7 @@ body {
     ion-button {
         font-size: 16px;
         min-height: 40px;
+        display: inline;
     }
 
     h1 {
@@ -307,7 +316,7 @@ ion-header {
     }
 
     ion-toolbar {
-        --background: transparent;
+        --background:#fff;
         box-shadow: none;
         border: none;
     }

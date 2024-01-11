@@ -39,8 +39,9 @@ export class LoginPage implements OnInit {
 
   get form() { return this.loginForm.controls; }
 
-  async onSubmit(){
+  async onSubmit(){    
     await this.loader.showLoader();
+    this.submitted=true;
     if(this.loginForm.invalid){
       this.loader.dismissLoader();
       return ;
