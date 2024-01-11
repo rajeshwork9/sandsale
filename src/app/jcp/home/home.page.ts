@@ -24,31 +24,11 @@ export class HomePage implements OnInit {
   locationFilter: any = {
     
   };
-  fillingColumns: any =[
-    "tbl_trips.trip_id",
-    "tbl_trips.truck_number",
-    "tbl_trips.created_on",
-    "tbl_trips.status",
-    "vehicle_entry",
-    "vehicle_exit",
-    "trip_date",
-    "tbl_trips.updated_on"
-  ];
-  fillingOrder : any = {
-    "tbl_trips.plate_region": "asc",
-    "tbl_trips.created_on": "asc"
-  };
-  fillingFilter: any = {
-    "tbl_trips.truck_number": "",
-    "tbl_trucks.truck_type": "1",
-    "tbl_trips.created_on": "",
-    "tbl_trips.location_id": "1",
-    "tbl_trips.status": "Yet to Fill",
-    "tbl_trips.trip_id": ""
-  }
+
   locationData: any;
   selectedLocId: any;
   fillingListData: any;
+
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
@@ -90,14 +70,37 @@ export class HomePage implements OnInit {
     // localStorage.setItem("locationId", this.selectedLocId);
     this.locationSer.setSelectedLocation(this.selectedLocId)
     this.isModalOpen = false
+    this.fillingList();
   }
 
   async fillingList(){
     await this.loader.showLoader();
+    let fillingColumns: any =[
+      "tbl_trips.trip_id",
+      "tbl_trips.truck_number",
+      "tbl_trips.created_on",
+      "tbl_trips.status",
+      "vehicle_entry",
+      "vehicle_exit",
+      "trip_date",
+      "tbl_trips.updated_on"
+    ];
+    let fillingOrder : any = {
+      "tbl_trips.plate_region": "asc",
+      "tbl_trips.created_on": "asc"
+    };
+    let fillingFilter: any = {
+      "tbl_trips.truck_number": "",
+      "tbl_trucks.truck_type": "1",
+      "tbl_trips.created_on": "",
+      "tbl_trips.location_id": this.selectedLocId,
+      "tbl_trips.status": "Yet to Fill",
+      "tbl_trips.trip_id": ""
+    }
     let payload = {
-      "columns":this.fillingColumns,
-      "order_by":this.fillingOrder,
-      "filters":this.fillingFilter
+      "columns":fillingColumns,
+      "order_by":fillingOrder,
+      "filters":fillingFilter
     }
     this.common.getFillingList(payload).subscribe((resp: any)=>{
       this.loader.dismissLoader();
