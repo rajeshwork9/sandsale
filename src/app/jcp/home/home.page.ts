@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
+import { LoaderService } from 'src/app/services/loader.service';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-home',
@@ -55,11 +57,15 @@ export class HomePage implements OnInit {
     this.isRejectionModalOpen = isOpen;
   }
 
-  constructor(private common: CommonService) { }
+  constructor(
+    private common: CommonService,
+    private loader: LoaderService,
+    private locationSer: LocationService
+    ) { }
 
   ngOnInit() {
-    this.locationDetails()
-    this.fillingList()
+    this.locationDetails();
+    this.fillingList();
   }
 
   async locationDetails(){
@@ -81,19 +87,33 @@ export class HomePage implements OnInit {
   onLocationChange(event: any) {
     this.selectedLocId = event.detail.value;
     console.log(this.selectedLocId);
-    localStorage.setItem("locationId",this.selectedLocId)
-    this.isModalOpen = false;
+    // localStorage.setItem("locationId", this.selectedLocId);
+    this.locationSer.setSelectedLocation(this.selectedLocId)
+    this.isModalOpen = false
   }
 
   async fillingList(){
+    await this.loader.showLoader();
     let payload = {
       "columns":this.fillingColumns,
       "order_by":this.fillingOrder,
       "filters":this.fillingFilter
     }
     this.common.getFillingList(payload).subscribe((resp: any)=>{
+      this.loader.dismissLoader();
       console.log(resp.data);
       this.fillingListData = resp.data;
+    })
+  }
+
+  async accept(id: any){
+    await this.loader.showLoader();
+    let payload = {
+      "trip_id":id
+    }
+    this.common.acceptTrip(payload).subscribe((resp: any)=>{
+      console.log(resp.data);
+      this.loader.dismissLoader();
     })
   }
 

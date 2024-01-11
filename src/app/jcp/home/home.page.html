@@ -41,7 +41,7 @@
             {{data.created_on}}
           </div>
           <div class="ion-float-right">
-            <ion-button [routerLink]="['/completedlist']" class="ion-padding-end" color="primary"  fill="solid" shape="round">Filling</ion-button>
+            <ion-button (click)="accept(data.trip_id)" class="ion-padding-end" color="primary"  fill="solid" shape="round">Filling</ion-button>
             <ion-button (click)="setRejectionOpen(true)" color="secondary" fill="solid" shape="round">Reject</ion-button>
           </div>
         </div>

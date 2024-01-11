@@ -7,7 +7,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { HTTP } from '@ionic-native/http/ngx';
 import { HeaderbuttonsModule } from './shared/headerbuttons/headerbuttons.module';
 
 @NgModule({
@@ -20,7 +19,7 @@ import { HeaderbuttonsModule } from './shared/headerbuttons/headerbuttons.module
     HttpClientModule,
     HeaderbuttonsModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },HTTP],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
