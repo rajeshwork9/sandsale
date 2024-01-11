@@ -38,7 +38,7 @@
         <div class="item-Bottom-Text">
           <div class="ion-float-left ">
             <ion-icon name="calendar-outline"></ion-icon>
-            {{data.created_on}}
+            {{data.created_on | date:'dd-MM-yyyy H:mm'}}
           </div>
           <div class="ion-float-right">
             <ion-button (click)="accept(data.trip_id)" class="ion-padding-end" color="primary"  fill="solid" shape="round">Filling</ion-button>
