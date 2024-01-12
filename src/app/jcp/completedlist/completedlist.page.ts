@@ -25,6 +25,7 @@ export class CompletedlistPage implements OnInit {
     location_name: 'asc',
   };
   locationFilter: any = {};
+  locId: any;
   constructor(
     private router: Router,
     private common: CommonService,
@@ -33,37 +34,16 @@ export class CompletedlistPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.locationSer.selectedLocation$.subscribe((resp: any) => {
-      console.log(resp);
-      this.subLocId = resp;
-      this.completedList(this.subLocId);
-    });
-    this.locationDetails();
-  }
-
-  async locationDetails(){
-    // await this.loader.showLoader();
-
-    let payload ={
-      "columns":this.locationColumns,
-      "order_by": this.locationOrder,
-      "filters":this.locationFilter
-    }
-    console.log("payload",payload);
-    this.common.getLocations(payload).subscribe((resp: any)=>{
-      console.log(resp.data);
-      this.locationData = resp.data;
-      console.log(this.locationData);
-    })
+    this.locId = localStorage.getItem('locationId');
+    console.log("lo",this.locId);
+    this.completedList();
   }
 
   cardClickAction() {
     this.router.navigate(['/completeddetails']);
   }
 
-  async completedList(data: any) {
-    console.log(data != '' ? this.selectedLocId : data);
-    console.log(data);
+  async completedList() {
     await this.loader.showLoader();
     let filledColumns: any = [
       'tbl_trips.trip_id',
@@ -83,7 +63,7 @@ export class CompletedlistPage implements OnInit {
       'tbl_trips.truck_number': '',
       'tbl_trucks.truck_type': '1',
       'tbl_trips.created_on': '',
-      'tbl_trips.location_id': data != '' ? this.selectedLocId : data,
+      'tbl_trips.location_id': this.locId,
       'tbl_trips.status': 'Filled',
       'tbl_trips.trip_id': '',
     };
