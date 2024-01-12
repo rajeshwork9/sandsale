@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActionSheetController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { LocationService } from 'src/app/services/location.service';
-
+import { NgModel } from '@angular/forms';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -29,19 +30,26 @@ export class HomePage implements OnInit {
   selectedLocId: any;
   fillingListData: any;
   subLocId: any;
+  rejectedNotes: any;
+  rejectedId: any;
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
 
-  setRejectionOpen(isOpen: boolean) {
+  setRejectionOpen(isOpen: boolean, id:any) {
+    this.rejectedId = id;
+    console.log(this.rejectedId);
+    
     this.isRejectionModalOpen = isOpen;
   }
+
 
   constructor(
     private common: CommonService,
     private loader: LoaderService,
-    private locationSer: LocationService
+    private locationSer: LocationService,
+    private actionSheetController: ActionSheetController
     ) { }
 
   ngOnInit() {
@@ -118,6 +126,51 @@ export class HomePage implements OnInit {
       console.log(resp.data);
       this.loader.dismissLoader();
     })
+  }
+
+  async presentActionSheet(data: any){
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Are you sure you want to fill the truck?',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: ()=>{
+            this.accept(data.trip_id);
+            console.log(data.trip_id);
+            this.fillingList();
+            
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler:() => {
+            console.log("cancel");
+            
+          },
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+
+  rejectClose(){
+    this.rejectedNotes = ''
+    this.isRejectionModalOpen = false;
+  } 
+
+  async reject(){
+    if(this.rejectedId){
+      let payload = {
+        "trip_id": 1,
+        "reject_notes":this.rejectedNotes
+      }
+      this.common.rejectTrip(payload).subscribe((resp: any)=>{
+        this.rejectClose();
+        console.log(resp);
+      });
+    }
   }
 
 }

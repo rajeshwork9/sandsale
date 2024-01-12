@@ -51,8 +51,8 @@
             {{data.created_on | date:'dd-MM-yyyy H:mm'}}
           </div>
           <div class="ion-float-right">
-            <ion-button (click)="accept(data.trip_id)" class="ion-padding-end" color="primary"  fill="solid" shape="round">Filling</ion-button>
-            <ion-button (click)="setRejectionOpen(true)" color="secondary" fill="solid" shape="round">Reject</ion-button>
+            <ion-button (click)="presentActionSheet(data)" class="ion-padding-end" color="primary"  fill="solid" shape="round">Filling</ion-button>
+            <ion-button (click)="setRejectionOpen(true,data.trip_id)" color="secondary" fill="solid" shape="round">Reject</ion-button>
           </div>
         </div>
       </ion-card-content>
@@ -84,7 +84,7 @@
           <div class="">
             <ion-label>Reason for Rejection</ion-label>
             <ion-item lines="none" class="textareaItem">
-              <ion-textarea aria-label="Comments" placeholder="Enter text here"></ion-textarea>
+              <ion-textarea [(ngModel)]="rejectedNotes" aria-label="Comments" placeholder="Enter text here"></ion-textarea>
             </ion-item>
           </div>
         </div>
@@ -93,8 +93,8 @@
       <ion-footer>
         <ion-toolbar>         
           <ion-buttons slot="end">
-            <ion-button color="medium" fill="outline" shape="round" (click)="setRejectionOpen(false)">Close</ion-button>
-            <ion-button color="primary" fill="outline" shape="round" (click)="setRejectionOpen(false)">Submit</ion-button>
+            <ion-button color="medium" fill="outline" shape="round" (click)="rejectClose()">Close</ion-button>
+            <ion-button color="primary" fill="outline" shape="round" (click)="reject()">Submit</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-footer>      
