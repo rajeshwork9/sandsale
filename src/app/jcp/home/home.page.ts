@@ -45,16 +45,8 @@ export class HomePage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.locationSer.selectedLocation$.subscribe((resp: any)=>{
-      console.log(resp);
-      this.subLocId = resp
-      this.fillingList(this.subLocId);
-    })
-    this.locationDetails();
-   
-     
-
-    
+    this.fillingList();
+    this.locationDetails(); 
   }
 
   async locationDetails(){
@@ -76,15 +68,12 @@ export class HomePage implements OnInit {
   onLocationChange(event: any) {
     this.selectedLocId = event.detail.value;
     console.log(this.selectedLocId);
-    // localStorage.setItem("locationId", this.selectedLocId);
-    // this.locationSer.setSelectedLocation(this.selectedLocId)
+    localStorage.setItem("locationId", this.selectedLocId);
     this.isModalOpen = false
-    this.fillingList("");
+    this.fillingList();
   }
 
-  async fillingList(data:any){
-    console.log( data!=''?this.selectedLocId:data)
-    console.log(data)
+  async fillingList(){
     await this.loader.showLoader();
     let fillingColumns: any =[
       "tbl_trips.trip_id",
@@ -104,7 +93,7 @@ export class HomePage implements OnInit {
       "tbl_trips.truck_number": "",
       "tbl_trucks.truck_type": "1",
       "tbl_trips.created_on": "",
-      "tbl_trips.location_id": data!=''?this.selectedLocId:data,
+      "tbl_trips.location_id": this.selectedLocId,
       "tbl_trips.status": "Yet to Fill",
       "tbl_trips.trip_id": ""
     }

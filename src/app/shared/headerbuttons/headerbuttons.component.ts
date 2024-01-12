@@ -54,33 +54,33 @@ this.isFilterModalOpen = isOpen;
    }
 
   ngOnInit() {
-    this.locationDetails();
+    // this.locationDetails();
     
   }
 
-   onLocationChange(event: any) {
-    this.selectedLocId = event.detail.value;
-    console.log(this.selectedLocId);
-    this.location.selectedLocation(this.selectedLocId)
-    this.fillingList();
+  //  onLocationChange(event: any) {
+  //   this.selectedLocId = event.detail.value;
+  //   console.log(this.selectedLocId);
+  //   this.location.selectedLocation(this.selectedLocId)
+  //   this.fillingList();
     
-  }
-  async locationDetails(){
-    // await this.loader.showLoader();
+  // }
+  // async locationDetails(){
+  //   // await this.loader.showLoader();
 
-    let payload ={
-      "columns":this.locationColumns,
-      "order_by": this.locationOrder,
-      "filters":this.locationFilter
-    }
-    console.log("payload",payload);
-    this.common.getLocations(payload).subscribe((resp: any)=>{
-      console.log(resp.data);
-      this.locationData = resp.data;
-      console.log(this.locationData);
+  //   let payload ={
+  //     "columns":this.locationColumns,
+  //     "order_by": this.locationOrder,
+  //     "filters":this.locationFilter
+  //   }
+  //   console.log("payload",payload);
+  //   this.common.getLocations(payload).subscribe((resp: any)=>{
+  //     console.log(resp.data);
+  //     this.locationData = resp.data;
+  //     console.log(this.locationData);
        
-    })
-  }
+  //   })
+  // }
 
   async fillingList(){
     await this.loader.showLoader();

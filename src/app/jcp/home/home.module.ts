@@ -9,6 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import{HeaderbuttonsModule} from 'src/app/shared/headerbuttons/headerbuttons.module'
 import{FotterbuttonsModule} from 'src/app/shared/fotterbuttons/fotterbuttons.module'
+import { NodataModule } from 'src/app/shared/nodata/nodata.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +17,8 @@ import{FotterbuttonsModule} from 'src/app/shared/fotterbuttons/fotterbuttons.mod
     IonicModule,
     HomePageRoutingModule,
     HeaderbuttonsModule,
-    FotterbuttonsModule
+    FotterbuttonsModule,
+    NodataModule
   ],
   declarations: [HomePage]
 })

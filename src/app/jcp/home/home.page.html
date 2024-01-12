@@ -9,8 +9,14 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true" class="bgWrapp fillingListWrapp">
-  <div class=" ">
+
+
+  <div *ngIf="fillingListData && fillingListData.length===0">
+    <app-nodata></app-nodata>
+  </div>
+  <div  *ngIf="fillingListData && fillingListData.length>0" class=" ">
     <ion-card *ngFor="let data of fillingListData">
       <ion-card-content>
         <ion-item class="list-item ion-no-padding" >
@@ -59,40 +65,40 @@
 
 
 <ion-modal [isOpen]="isRejectionModalOpen" [backdropDismiss]="false" class="rejectionModalWrapp" >
-  <ng-template> 
-    <ion-content class="ion-padding-no">
-      <div class="ion-modal-heading fillingListWrapp">
-        <ion-item class="list-item ion-no-padding" lines="none">
-          <ion-avatar slot="start" class="avatar-icon">
-            <ion-img src="../../assets/images/filling-truck-icon.svg"></ion-img>
-          </ion-avatar>
-          <ion-text>
-            <h4>TS12345675</h4>  
-            <p>Truck Number</p>          
-          </ion-text>
-        </ion-item>
-      </div>
-   
-        
-      <div class="contentBlockModal">
-        <div class="">
-          <ion-label>Reason for Rejection</ion-label>
-          <ion-item lines="none" class="textareaItem">
-            <ion-textarea aria-label="Comments" placeholder="Enter text here"></ion-textarea>
+    <ng-template> 
+      <ion-content class="ion-padding-no">
+        <div class="ion-modal-heading fillingListWrapp">
+          <ion-item class="list-item ion-no-padding" lines="none">
+            <ion-avatar slot="start" class="avatar-icon">
+              <ion-img src="../../assets/images/filling-truck-icon.svg"></ion-img>
+            </ion-avatar>
+            <ion-text>
+              <h4>TS12345675</h4>  
+              <p>Truck Number</p>          
+            </ion-text>
           </ion-item>
         </div>
-      </div>
-    </ion-content>
-
-    <ion-footer>
-      <ion-toolbar>         
-        <ion-buttons slot="end">
-          <ion-button color="medium" fill="outline" shape="round" (click)="setRejectionOpen(false)">Close</ion-button>
-          <ion-button color="primary" fill="outline" shape="round" (click)="setRejectionOpen(false)">Submit</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-footer>      
-  </ng-template>
+     
+          
+        <div class="contentBlockModal">
+          <div class="">
+            <ion-label>Reason for Rejection</ion-label>
+            <ion-item lines="none" class="textareaItem">
+              <ion-textarea aria-label="Comments" placeholder="Enter text here"></ion-textarea>
+            </ion-item>
+          </div>
+        </div>
+      </ion-content>
+  
+      <ion-footer>
+        <ion-toolbar>         
+          <ion-buttons slot="end">
+            <ion-button color="medium" fill="outline" shape="round" (click)="setRejectionOpen(false)">Close</ion-button>
+            <ion-button color="primary" fill="outline" shape="round" (click)="setRejectionOpen(false)">Submit</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-footer>      
+    </ng-template>
 </ion-modal>
 
 <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false" class="locationModalWrapp">
