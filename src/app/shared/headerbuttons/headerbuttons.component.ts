@@ -4,6 +4,7 @@ import { IonModal } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { filter } from 'rxjs/operators';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-headerbuttons',
@@ -29,6 +30,7 @@ export class HeaderbuttonsComponent  implements OnInit {
   userData: any;
   locationData: any;
   selectedLocId: any;
+  fillingListData: any;
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
@@ -42,7 +44,8 @@ this.isFilterModalOpen = isOpen;
     private loader: LoaderService,
     private common: CommonService,
     private activatedRouterService: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: LocationService
   ) {
     let userInfo:any = localStorage.getItem('userData')
     // console.log(userInfo);
@@ -58,6 +61,8 @@ this.isFilterModalOpen = isOpen;
    onLocationChange(event: any) {
     this.selectedLocId = event.detail.value;
     console.log(this.selectedLocId);
+    this.location.selectedLocation(this.selectedLocId)
+    this.fillingList();
     
   }
   async locationDetails(){
@@ -73,6 +78,43 @@ this.isFilterModalOpen = isOpen;
       console.log(resp.data);
       this.locationData = resp.data;
       console.log(this.locationData);
+       
+    })
+  }
+
+  async fillingList(){
+    await this.loader.showLoader();
+    let fillingColumns: any =[
+      "tbl_trips.trip_id",
+      "tbl_trips.truck_number",
+      "tbl_trips.created_on",
+      "tbl_trips.status",
+      "vehicle_entry",
+      "vehicle_exit",
+      "trip_date",
+      "tbl_trips.updated_on"
+    ];
+    let fillingOrder : any = {
+      "tbl_trips.plate_region": "asc",
+      "tbl_trips.created_on": "asc"
+    };
+    let fillingFilter: any = {
+      "tbl_trips.truck_number": "",
+      "tbl_trucks.truck_type": "1",
+      "tbl_trips.created_on": "",
+      "tbl_trips.location_id": this.selectedLocId,
+      "tbl_trips.status": "Yet to Fill",
+      "tbl_trips.trip_id": ""
+    }
+    let payload = {
+      "columns":fillingColumns,
+      "order_by":fillingOrder,
+      "filters":fillingFilter
+    }
+    this.common.getFillingList(payload).subscribe((resp: any)=>{
+      this.loader.dismissLoader();
+      console.log(resp.data);
+      this.fillingListData = resp.data;
     })
   }
 
