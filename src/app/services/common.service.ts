@@ -126,6 +126,28 @@ export class CommonService {
     })
   }
 
+  rejectTrip(body: any):Observable<any>{
+    return Observable.create((Observer: any)=>{
+      const headers: HttpHeaders = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer "+this.bearerToken,
+      })
+      const options = { headers: headers };
+      let nativeHttpCall = this.http.post(environment.apiUrl + 'reject-trip', body,options);
+      from(nativeHttpCall).subscribe(
+        (res: any) => {
+          console.log(res);
+          Observer.next(res);
+          Observer.complete();
+        },
+        (err: any) => {
+          Observer.error(err);
+          Observer.complete();
+        }
+      );
+    })
+  }
+
   getRejectedList(body: any):Observable<any>{
     return Observable.create((Observer: any)=>{
       const headers: HttpHeaders = new HttpHeaders({

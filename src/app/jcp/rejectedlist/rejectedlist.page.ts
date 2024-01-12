@@ -52,14 +52,17 @@ export class RejectedlistPage implements OnInit {
       'tbl_trips.status': 'Reject',
       'tbl_trips.trip_id': '',
     };
+    
     let payload = {
       columns: filledColumns,
       order_by: filledOrder,
       filters: filledFilter,
     };
+
     this.common.getRejectedList(payload).subscribe((resp: any) => {
       this.loader.dismissLoader();
        this.rejectedListData = resp.data;
+       console.log("rejectedListData",  this.rejectedListData)
     });
   }
 
