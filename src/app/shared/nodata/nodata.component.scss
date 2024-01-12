@@ -1,0 +1,28 @@
+.nodataWrapp {
+    margin-top: 20px;
+
+    ion-text {
+        text-align: center;
+        display: block;
+        margin-top: 10px;
+        font-size: 1rem;
+    }
+
+    .nodataBlock {
+        border-radius: 50%;
+        background: #fff;
+        width: 250px;
+        height: 250px;
+        display: block;
+        margin: auto;
+        overflow: hidden;
+
+
+        ion-img {
+            width: 74%;
+            margin: auto;
+            margin-top: 23px;
+        }
+    }
+
+}

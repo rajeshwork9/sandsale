@@ -28,28 +28,24 @@
         <h4>Change Language</h4>
         <ion-radio-group [value]="selectedLang">
           <div class="selectedLangRadio">
-            <ion-item lines="none" class="no-ripple">
-              <ion-label>English</ion-label>
-              <ion-radio value="en"></ion-radio>
+            <ion-item lines="none" class="no-ripple">            
+              <ion-radio aria-label="en" value="en" justify="start">English</ion-radio>
             </ion-item>
           </div>
 
           <div class="selectedLangRadio">
-            <ion-item lines="none" class="no-ripple">
-              <ion-label>Arabic</ion-label>
-              <ion-radio value="ar"></ion-radio>
+            <ion-item lines="none" class="no-ripple">             
+              <ion-radio aria-label="ar" value="ar" justify="start">Arabic</ion-radio>
             </ion-item>
           </div>
         </ion-radio-group>
       </div>
-
-
     </div>
 
 
       <ion-buttons class="logoutBlock">
-        <ion-button color="secondary" fill="outline" shape="round">
-          <ion-icon name="log-out-outline"> </ion-icon> Logout
+        <ion-button color="secondary" fill="outline" shape="round" (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon> Logout
         </ion-button>
       </ion-buttons>
 
