@@ -3,6 +3,7 @@
     <ion-title class="ion-float-left">Completed List</ion-title>
     <div class="ion-float-right ion-header-Right">
       <app-headerbuttons></app-headerbuttons>   
+      <ion-button (click)="setFilterOpen(true)"><ion-img class="filterIcon" src="../../assets/images/filter-icon.svg"></ion-img></ion-button>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -48,3 +49,68 @@
 </ng-template>
 </ion-content>
 <app-fotterbuttons></app-fotterbuttons>
+
+<ion-modal [isOpen]="isFilterModalOpen" [backdropDismiss]="false" class="filterModalWrapp">
+  <ng-template>
+    <ion-content class="ion-padding-no">
+      <div class="ion-modal-heading fillingListWrapp">
+        <ion-item class="list-item ion-no-padding" lines="none">
+          <ion-avatar slot="start" class="avatar-icon">
+            <ion-img src="../../assets/images/filling-truck-icon.svg"></ion-img>
+          </ion-avatar>
+          <ion-text>
+            <h4>Filter</h4>
+          </ion-text>
+        </ion-item>
+      </div>
+
+
+      <div class="contentBlockModal">
+        <div class="ion-formGroup">
+          <ion-label>Truck Number</ion-label>
+          <ion-item lines="none">
+            <ion-input aria-label="trucknumber" placeholder="Enter truck number"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="ion-formGroup">
+          <ion-label>Truck Type</ion-label>
+          <ion-item lines="none">
+            <ion-select aria-label="trucktype" placeholder="Enter truck Type">
+              <ion-select-option value="type1">type1</ion-select-option>
+              <ion-select-option value="type2">type2</ion-select-option>
+              <ion-select-option value="type3">type3</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <div class="ion-formGroup">
+          <ion-label>Date</ion-label>
+          <ion-item lines="none">
+            <ion-input aria-label="date" type="date" placeholder="Select Date"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="ion-formGroup">
+          <ion-label>Location</ion-label>
+          <ion-item lines="none">
+            <ion-select aria-label="location" placeholder="Select Location">
+              <ion-select-option value="location1">Location1</ion-select-option>
+              <ion-select-option value="location2">Location2</ion-select-option>
+              <ion-select-option value="location3">Location3</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </div>
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button color="medium" fill="outline" shape="round" (click)="setFilterOpen(false)">Close</ion-button>
+          <ion-button color="primary" fill="outline" shape="round" (click)="setFilterOpen(false)">Apply</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-template>
+</ion-modal>

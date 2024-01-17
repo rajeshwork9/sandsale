@@ -11,6 +11,12 @@ import { LocationService } from 'src/app/services/location.service';
 export class RejectedlistPage implements OnInit {
   rejectedListData: any;
   locationIdInfo:any;
+  isFilterModalOpen: boolean = false;
+
+  
+  setFilterOpen(isOpen: boolean){
+    this.isFilterModalOpen = isOpen;
+      }
   
   constructor(
     private router: Router,

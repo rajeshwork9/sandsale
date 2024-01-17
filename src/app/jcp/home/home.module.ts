@@ -1,6 +1,6 @@
 import {  NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -18,7 +18,8 @@ import { NodataModule } from 'src/app/shared/nodata/nodata.module';
     HomePageRoutingModule,
     HeaderbuttonsModule,
     FotterbuttonsModule,
-    NodataModule
+    NodataModule,
+    ReactiveFormsModule
   ],
   declarations: [HomePage],
 })

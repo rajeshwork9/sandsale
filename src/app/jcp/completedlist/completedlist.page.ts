@@ -26,6 +26,11 @@ export class CompletedlistPage implements OnInit {
   };
   locationFilter: any = {};
   locId: any;
+  isFilterModalOpen: boolean= false;
+
+  setFilterOpen(isOpen: boolean){
+    this.isFilterModalOpen = isOpen;
+      }
   constructor(
     private router: Router,
     private common: CommonService,

@@ -3,13 +3,14 @@ import { ActionSheetController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { LocationService } from 'src/app/services/location.service';
-import { NgModel } from '@angular/forms';
+import { FormBuilder, FormGroup, NgModel } from '@angular/forms';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  filterForm: FormGroup;
   isModalOpen = true;
   isRejectionModalOpen = false;
   locationColumns: any = [
@@ -32,6 +33,7 @@ export class HomePage implements OnInit {
   subLocId: any;
   rejectedNotes: any;
   rejectedId: any;
+  isFilterModalOpen: boolean = false;
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
@@ -44,13 +46,27 @@ export class HomePage implements OnInit {
     this.isRejectionModalOpen = isOpen;
   }
 
+  setFilterOpen(isOpen: boolean){
+    this.filteredList();
+    this.isFilterModalOpen = isOpen;
+  }
+
 
   constructor(
     private common: CommonService,
     private loader: LoaderService,
     private locationSer: LocationService,
-    private actionSheetController: ActionSheetController
-    ) { }
+    private actionSheetController: ActionSheetController,
+    private fb: FormBuilder
+    ) {
+      this.filterForm = this.fb.group({
+        truck_number:[null],
+        truck_type:[null],
+        date:[null],
+        location:[null]
+      })
+
+     }
 
   ngOnInit() {
     this.fillingList();
@@ -171,6 +187,11 @@ export class HomePage implements OnInit {
         console.log(resp);
       });
     }
+  }
+
+  filteredList(){
+    console.log(this.filterForm.value);
+    this.filterForm.reset();
   }
 
 }
