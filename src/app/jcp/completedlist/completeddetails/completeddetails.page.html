@@ -10,18 +10,18 @@
 
 <ion-content [fullscreen]="true" class="bgWrapp fillingListWrapp detailsCardwrapp">
 
-  <ion-card>
+  <ion-card *ngFor="let data of completedListData">
     <ion-card-content>
       <ion-item lines="none" class="list-item ion-no-padding">
         <ion-avatar slot="start" class="avatar-icon">
           <ion-img src="../../assets/images/completed-truck-icon.svg"></ion-img>
         </ion-avatar>
         <ion-grid>
-          <ion-row>
+          <ion-row >
             <ion-col size="7">
               <div class="ion-col-border-right">
                 <ion-text>
-                <h4>TS12345674</h4>
+                <h4>{{data.truck_number}}</h4>
                 <p>Truck Number</p>
                 </ion-text>
               </div>
@@ -29,7 +29,7 @@
             <ion-col size="5">
               <div class="truckTypeLeft">
                 <ion-text>
-                <h4 class="secondaryColor">3XL</h4>
+                <h4 class="secondaryColor">{{data.truck_type}}</h4>
                 <p> Truck Type</p>
                 </ion-text>
               </div>
@@ -38,33 +38,33 @@
         </ion-grid>
       </ion-item>
 
-      <div class="detailsCardBlock">
+     <div class="detailsCardBlock">
         <ion-list>
           <ion-item lines="none">
             <ion-text>
               <h6>Filling Location</h6>
-              <h4>Dubai</h4>
+              <h4>{{data.location_name}}</h4>
               </ion-text>
            </ion-item>
            
           <ion-item lines="none">
             <ion-text>
               <h6>Entry</h6>
-              <h4>08-12-2023 11:26 </h4>
+              <h4>{{data.vehicle_entry}}</h4>
               </ion-text>
            </ion-item>
            
            <ion-item lines="none">
             <ion-text>
               <h6>Sand Filling</h6>
-              <h4>08-12-2023 11:26 </h4>
+              <h4>{{data.trip_date}}</h4>
               </ion-text>
            </ion-item>
 
            <ion-item lines="none">
             <ion-text>
               <h6>Exit</h6>
-              <h4>08-12-2023 11:26 </h4>
+              <h4>{{data.vehicle_exit}} </h4>
               </ion-text>
            </ion-item>
 
