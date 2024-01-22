@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastService } from 'src/app/services/toast.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -10,7 +11,10 @@ export class ProfilePage implements OnInit {
   userData: any;
   userFirstName: any;
   userLastName: any;
-  constructor(private router:Router,) { }
+  constructor(
+    private router:Router,
+    private toastService: ToastService,
+    ) { }
 
   ngOnInit() {
     let userInfo:any = localStorage.getItem("userData");
@@ -26,6 +30,7 @@ export class ProfilePage implements OnInit {
     localStorage.clear();
     localStorage.removeItem('userData');
     this.router.navigate(["login"]);
+    this.toastService.showSuccess('Successfully Logout', 'Success');
   }
 
 }

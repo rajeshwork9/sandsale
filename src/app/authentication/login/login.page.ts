@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader.service';
 import { LoginService } from 'src/app/services/login.service';
 import { finalize } from 'rxjs';
-
+import { ToastService } from 'src/app/services/toast.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -13,11 +13,13 @@ import { finalize } from 'rxjs';
 export class LoginPage implements OnInit {  
   loginForm: FormGroup;
   submitted = false;
+  errorMsg = '';
   constructor(
     private fb: FormBuilder,
     public router: Router, 
     private loader: LoaderService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private toastService: ToastService,
   ) { 
     let userInfo:any = localStorage.getItem("userData");
     if(userInfo){
@@ -60,6 +62,7 @@ export class LoginPage implements OnInit {
     console.log(resp.status);
     
     if(resp.status == 200){
+      this.toastService.showSuccess('Successfully Login', 'Success');
       localStorage.setItem("userData",JSON.stringify(resp.data));
       this.loginForm.reset()
       this.submitted = false; 
@@ -68,8 +71,14 @@ export class LoginPage implements OnInit {
     }
     else{
       this.loader.dismissLoader();
+      this.toastService.showError(resp.message, "Error");
     }
-  })
+  }, error => {   
+    this.loader.dismissLoader();
+        this.errorMsg = error;
+        console.log("error", error );
+      this.toastService.showError(this.errorMsg, "Error");
+   })
   }
 
 }

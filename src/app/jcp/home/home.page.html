@@ -1,24 +1,28 @@
 <ion-header [translucent]="true"  class="ion-no-border">
   <ion-toolbar>
-    <ion-title class="ion-float-left">Filling List</ion-title>
-   
+    <ion-title class="ion-float-left">Filling List</ion-title>   
     <div class="ion-float-right ion-header-Right">
-    <app-headerbuttons></app-headerbuttons>
+    <!-- <app-headerbuttons></app-headerbuttons> -->
+    <ion-text class="ion-float-left">{{locationName}}</ion-text>
     <ion-button (click)="setOpen(true)"><ion-img src="../../assets/images/map-icon.svg"></ion-img></ion-button>
-    <ion-button (click)="setFilterOpen(true)"><ion-img class="filterIcon" src="../../assets/images/filter-icon.svg"></ion-img></ion-button>
+    <ion-button (click)="filterTrue()"><ion-img class="filterIcon" src="../../assets/images/filter-icon.svg"></ion-img></ion-button>
   </div>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content [fullscreen]="true" class="bgWrapp fillingListWrapp">
-
-
-  <div *ngIf="fillingListData && fillingListData.length===0">
+  <ng-template [ngIf]="fillingListData && fillingListData.length===0">
     <app-nodata></app-nodata>
-  </div>
-  <div  *ngIf="fillingListData && fillingListData.length>0" class=" ">
-    <ion-card *ngFor="let data of fillingListData">
+  </ng-template>
+
+  <ng-template [ngIf]="filteredListData && filteredListData.length===0">
+    <app-nodata></app-nodata>
+  </ng-template>
+
+  <!-- [ngIf]="fillingListData && fillingListData.length>0" -->
+  <ng-template [ngIf]="fillingListData && fillingListData.length>0">
+    <ion-card *ngFor="let data of filteredListData ? filteredListData : fillingListData">
       <ion-card-content>
         <ion-item class="list-item ion-no-padding" >
           <ion-avatar slot="start" class="avatar-icon">
@@ -58,13 +62,14 @@
         </div>
       </ion-card-content>
     </ion-card>
-  </div>
+  </ng-template>
+
 </ion-content>
 
 
 <app-fotterbuttons></app-fotterbuttons>
 
-
+<!-- Rejection Modal -->
 <ion-modal [isOpen]="isRejectionModalOpen" [backdropDismiss]="false" class="rejectionModalWrapp" >
     <ng-template> 
       <ion-content class="ion-padding-no">
@@ -102,6 +107,7 @@
     </ng-template>
 </ion-modal>
 
+<!-- location Modal -->
 <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false" class="locationModalWrapp">
   <ng-template>
     <ion-content class="ion-padding-no">
@@ -121,8 +127,8 @@
         <div class="">
           <ion-label>Location</ion-label>
           <ion-item lines="none">
-            <ion-select aria-label="Location" placeholder="Select Location" (ionChange)="onLocationChange($event)" >
-              <ion-select-option *ngFor="let data of locationData" value="{{data.id}}" >{{data.location_name}}</ion-select-option>
+            <ion-select aria-label="Location" label="Select Location" label-placement="floating" (ionChange)="onLocationChange($event)" >
+              <ion-select-option *ngFor="let data of locationData" value="{{data.id}}">{{data.location_name}}</ion-select-option>
             </ion-select>
           </ion-item>
         </div>
@@ -140,6 +146,7 @@
   </ng-template>
 </ion-modal>
 
+<!-- Filter Modal -->
 <ion-modal [isOpen]="isFilterModalOpen" [backdropDismiss]="false" class="filterModalWrapp">
   <ng-template>
     <ion-content class="ion-padding-no">
@@ -166,10 +173,8 @@
           <div class="ion-formGroup">
             <ion-label>Truck Type</ion-label>
             <ion-item lines="none">
-              <ion-select formControlName="truck_type" aria-label="trucktype" placeholder="Enter truck Type">
-                <ion-select-option value="type1">type1</ion-select-option>
-                <ion-select-option value="type2">type2</ion-select-option>
-                <ion-select-option value="type3">type3</ion-select-option>
+              <ion-select formControlName="truck_type" aria-label="truck_type" placeholder="Select Truck Type">
+                <ion-select-option *ngFor="let fdata of truckTypeListData" value="{{fdata.id}}" >{{fdata.truck_type}}</ion-select-option>
               </ion-select>
             </ion-item>
           </div>
@@ -197,7 +202,7 @@
     <ion-footer>
       <ion-toolbar>
         <ion-buttons slot="end">
-          <ion-button color="medium" fill="outline" shape="round" (click)="setFilterOpen(false)">Close</ion-button>
+          <ion-button color="medium" fill="outline" shape="round" (click)="filterFalse()">Close</ion-button>
           <ion-button color="primary" fill="outline" shape="round" (click)="setFilterOpen(false)">Apply</ion-button>
         </ion-buttons>
       </ion-toolbar>

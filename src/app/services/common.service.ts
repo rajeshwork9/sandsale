@@ -136,7 +136,7 @@ export class CommonService {
       let nativeHttpCall = this.http.post(environment.apiUrl + 'reject-trip', body,options);
       from(nativeHttpCall).subscribe(
         (res: any) => {
-          console.log(res);
+          // console.log(res);
           Observer.next(res);
           Observer.complete();
         },
@@ -162,7 +162,30 @@ export class CommonService {
       let nativeHttpCall = this.http.post(environment.apiUrl + 'trip-details', body,options);
       from(nativeHttpCall).subscribe(
         (res: any) => {
-          console.log(res);
+          // console.log(res);
+          Observer.next(res);
+          Observer.complete();
+        },
+        (err: any) => {
+          Observer.error(err);
+          Observer.complete();
+        }
+      );
+    })
+  }
+
+
+  getTruckTypesList(body: any):Observable<any>{
+    return Observable.create((Observer: any)=>{
+      const headers: HttpHeaders = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer "+this.bearerToken,
+      });
+      const options = { headers: headers };
+      let nativeHttpCall = this.http.post(environment.apiUrl + 'truck-types', body,options);
+      from(nativeHttpCall).subscribe(
+        (res: any) => {
+          // console.log(res);
           Observer.next(res);
           Observer.complete();
         },

@@ -120,13 +120,13 @@ small.error-message{
         font-size: 1.563rem;
         margin: 0px;
         font-weight: 500;
-        color: #116E99;
+        color: var(--ion-color-primary) ;
         margin-bottom: 30px;
     }
 
     .forgotPassword {
         font-size: 0.8rem;
-        color: #116E99;
+        color: var(--ion-color-primary) ;
         display: block;
         text-align: right;
         margin-top: 20px;
@@ -146,7 +146,7 @@ small.error-message{
     h4 {
         font-size:0.875rem;
         font-weight: 700;
-        color: #116E99;
+        color: var(--ion-color-primary) ;
     }
 
     .ion-col-border-right {
@@ -361,6 +361,7 @@ ion-header {
         color: #31385B;
         font-weight: 600;
         margin-top: 10px;
+        text-transform: capitalize;
     }
 
     h6 {
@@ -477,7 +478,7 @@ ion-header {
     h4 {
         font-weight:500;
         font-size:0.9rem;
-        color: #116E99;
+        color: var(--ion-color-primary) ;
         line-height: 22px;
     }
 
@@ -486,12 +487,18 @@ ion-header {
     }
 }
 
+
+
+// ion-modal Start
 .rejectionModalWrapp{
     --height:60%;
     --min-height:60%;
     --max-height:60%;
   }
 ion-modal {
+    --height: 70%;
+    --min-height: 70%;
+    --max-height: 70%;
     align-items: end;
     --border-radius: 10px;
     bottom: -10px;
@@ -587,6 +594,63 @@ ion-modal {
                     margin-left: 15px !important;
                 }
             }
+        }
+    }
+}
+
+.locationModalWrapp{
+    --min-height:60%;
+    --max-height:60%;
+  }
+  .filterModalWrapp{
+    --min-height:85%;
+    --max-height:85%;
+  }
+// ion-modal End
+
+// ion-alert
+ion-alert.custom-alert {
+    text-align: center;
+
+    .alert-button-group {
+        padding:10px 5px !important;
+        background: #E9F8FF !important;
+    }
+
+    .alert-message {
+        line-height: 24px !important;
+        font-size:0.875rem !important;
+        color: var(--ion-color-dark) !important;
+        font-weight: 500 !important;
+        padding-bottom: 30px !important;
+    }
+
+    .alert-button-confirm {
+        font-weight: 500 !important;
+        padding: 0px 0px !important;
+        color: var(--ion-color-primary) !important;
+        border: solid 2px var(--ion-color-primary) !important;
+        border-radius: 30px !important;
+        width: 88px;
+        height: 32px;
+        font-size: 0.8rem !important;
+        span {
+            justify-content: center !important;
+        }
+    }
+
+    .alert-button-cancel {
+        font-weight: 500 !important;
+        padding: 0px 0px !important;
+        color: #808289 !important;
+        border: solid 2px #808289 !important;
+        border-radius: 30px !important;
+        width: 88px;
+        height: 32px;
+        font-size: 0.8rem !important;
+        margin-right: 20px !important;
+        span {
+            justify-content: center !important;
         }
     }
 }

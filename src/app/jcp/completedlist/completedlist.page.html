@@ -3,7 +3,8 @@
     <ion-title class="ion-float-left">Completed List</ion-title>
     <div class="ion-float-right ion-header-Right">
       <app-headerbuttons></app-headerbuttons>   
-      <ion-button (click)="setFilterOpen(true)"><ion-img class="filterIcon" src="../../assets/images/filter-icon.svg"></ion-img></ion-button>
+      <!-- <ion-button (click)="setFilterOpen(true)"><ion-img class="filterIcon" src="../../assets/images/filter-icon.svg"></ion-img></ion-button> -->
+      <ion-button (click)="filterTrue()"><ion-img class="filterIcon" src="../../assets/images/filter-icon.svg"></ion-img></ion-button>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -13,10 +14,15 @@
     <app-nodata></app-nodata>
   </ng-template>
 
+  <ng-template [ngIf]="filteredListData && filteredListData.length===0">
+    <app-nodata></app-nodata>
+  </ng-template>
+
   <ng-template [ngIf]="completedListData && completedListData.length > 0">
   <div class=" ">
     <!-- (click)="cardClickAction()" -->
-    <ion-card [button]="true" *ngFor="let data of completedListData">
+
+    <ion-card [button]="true" *ngFor="let data of filteredListData ? filteredListData : completedListData" [routerLink]=" ['/completeddetails',data.trip_id]">
       <ion-card-content>
         <ion-item lines="none" class="list-item ion-no-padding"  detail="true">
           <ion-avatar slot="start" class="avatar-icon">
@@ -50,7 +56,72 @@
 </ion-content>
 <app-fotterbuttons></app-fotterbuttons>
 
+
+<!-- Filter Modal -->
 <ion-modal [isOpen]="isFilterModalOpen" [backdropDismiss]="false" class="filterModalWrapp">
+  <ng-template>
+    <ion-content class="ion-padding-no">
+      <div class="ion-modal-heading fillingListWrapp">
+        <ion-item class="list-item ion-no-padding" lines="none">
+          <ion-avatar slot="start" class="avatar-icon">
+            <ion-img src="../../assets/images/filling-truck-icon.svg"></ion-img>
+          </ion-avatar>
+          <ion-text>
+            <h4>Filter</h4>
+          </ion-text>
+        </ion-item>
+      </div>
+
+      <form [formGroup]="filterForm" >
+        <div class="contentBlockModal">
+          <div class="ion-formGroup">
+            <ion-label>Truck Number</ion-label>
+            <ion-item lines="none">
+              <ion-input formControlName="truck_number" aria-label="trucknumber" placeholder="Enter truck number"></ion-input>
+            </ion-item>
+          </div>
+  
+          <div class="ion-formGroup">
+            <ion-label>Truck Type</ion-label>
+            <ion-item lines="none">
+              <ion-select formControlName="truck_type" aria-label="truck_type" placeholder="Select Truck Type">
+                <ion-select-option *ngFor="let fdata of truckTypeListData" value="{{fdata.id}}" >{{fdata.truck_type}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+  
+          <div class="ion-formGroup">
+            <ion-label>Date</ion-label>
+            <ion-item lines="none">
+              <ion-input formControlName="date" aria-label="date" type="date" placeholder="Select Date"></ion-input>
+            </ion-item>
+          </div>
+  
+          <div class="ion-formGroup">
+            <ion-label>Location</ion-label>
+            <ion-item lines="none">
+              <ion-select formControlName="location" aria-label="location" placeholder="Select Location">
+                <ion-select-option *ngFor="let data of locationData" value="{{data.id}}">{{data.location_name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+      </form>
+
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button color="medium" fill="outline" shape="round" (click)="filterFalse()">Close</ion-button>
+          <ion-button color="primary" fill="outline" shape="round" (click)="setFilterOpen(false)">Apply</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-template>
+</ion-modal>
+
+<!-- <ion-modal [isOpen]="isFilterModalOpen" [backdropDismiss]="false" class="filterModalWrapp">
   <ng-template>
     <ion-content class="ion-padding-no">
       <div class="ion-modal-heading fillingListWrapp">
@@ -113,4 +184,4 @@
       </ion-toolbar>
     </ion-footer>
   </ng-template>
-</ion-modal>
+</ion-modal> -->
