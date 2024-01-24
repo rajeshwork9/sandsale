@@ -19,9 +19,8 @@ export class CompleteddetailsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.locId = localStorage.getItem('locationId');
-    console.log('lo', this.locId);
-   this.completedList();
+    // this.locId = localStorage.getItem('locationId');
+      this.completedList();
   }
   async completedList() {
     await this.loader.showLoader();
@@ -43,7 +42,7 @@ export class CompleteddetailsPage implements OnInit {
       'tbl_trips.truck_number': '',
       'tbl_trucks.truck_type': '',
       'tbl_trips.created_on': '',
-      'tbl_trips.location_id': this.locId,
+      'tbl_trips.location_id': '',
       'tbl_trips.status': 'Filled',
       'tbl_trips.trip_id': '',
     };
@@ -54,7 +53,6 @@ export class CompleteddetailsPage implements OnInit {
     };
     this.common.getCompletedList(payload).subscribe((resp: any) => {
       this.loader.dismissLoader();
-      console.log(resp.data);
       this.completedListData = resp.data;
       console.log("completedDetails", this.completedListData);
     });

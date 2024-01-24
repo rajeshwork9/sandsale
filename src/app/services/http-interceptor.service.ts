@@ -115,7 +115,9 @@ export class HttpInterceptorService implements HttpInterceptor {
       if (error && error.status === 401) {
         // this.toastService.showError(error.statusText, error.status);
         // console.log('error', error);
-        return throwError(error);
+            return throwError(error);
+
+         
       }
       // if (!this.refreshTokenInProgress) {
       //   this.refreshTokenInProgress = true;
@@ -128,6 +130,9 @@ export class HttpInterceptorService implements HttpInterceptor {
       //     switchMap(token => next.handle(this.addToken(req)))
       //   );
       // }
+
+      localStorage.clear();
+      localStorage.removeItem('userData');
     }
     // eslint-disable-next-line @typescript-eslint/member-ordering
     handle400Error(error: HttpErrorResponse): Observable<HttpEvent<any>> {

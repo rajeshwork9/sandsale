@@ -19,13 +19,13 @@ export class CompletedlistPage implements OnInit {
   subLocId: any;
 
   truckTypeListData: any;
-  locationName: any;
   filteredListData: any;
   dataFiltered: any;
+  locationName:any;
 
-
-  locId: any;
+  locationIdInfo: any;
   isFilterModalOpen: boolean = false;
+  clearFilterBlock:boolean = false;
 
   constructor(
     private common: CommonService,
@@ -38,13 +38,15 @@ export class CompletedlistPage implements OnInit {
       truck_number: [null],
       truck_type: [null],
       date: [null],
-      location: [null],
+      // location: [null],
     });
   }
 
   ngOnInit() {
-    this.locId = localStorage.getItem('locationId');
-    console.log('lo', this.locId);
+    this.locationIdInfo = localStorage.getItem('locationId');
+    console.log('locationIdInfo', this.locationIdInfo);
+    this.locationName = localStorage.getItem('locationName');
+    console.log("locationName", this.locationName);
     this.completedList();
     this.locationDetails();
   }
@@ -73,7 +75,7 @@ export class CompletedlistPage implements OnInit {
       'tbl_trips.truck_number': '',
       'tbl_trucks.truck_type': '',
       'tbl_trips.created_on': '',
-      'tbl_trips.location_id': this.locId,
+      'tbl_trips.location_id':this.locationIdInfo,
       'tbl_trips.status': 'Filled',
       'tbl_trips.trip_id': '',
     };
@@ -83,11 +85,15 @@ export class CompletedlistPage implements OnInit {
       filters: filledFilter,
     };
     this.common.getCompletedList(payload).subscribe((resp: any) => {
-      this.loader.dismissLoader();
-      console.log(resp.data);
-      this.completedListData = resp.data;
-      console.log("completedListData", this.completedListData);
+        this.loader.dismissLoader();
+        console.log("completedresp", resp.data);
+        this.completedListData = resp.data;
+        console.log("completedListData", this.completedListData);
+        // this.locationName = this.completedListData[0].location_name;
+       
     });
+
+
   }
 
 //Start truckType
@@ -141,7 +147,6 @@ async locationDetails() {
   };
 
   this.common.getLocations(payload).subscribe((resp: any) => {
-    console.log(resp.data);
     this.locationData = resp.data;
 
   });
@@ -151,11 +156,12 @@ async locationDetails() {
 
 
   // Filter
-  setFilterOpen(isOpen: boolean) {
+  setFilterApply(isOpen: boolean) {
     this.filteredList();
     this.isFilterModalOpen = isOpen;
     this.truckTypesList();
-    this.completedList = this.dataFiltered;    
+    this.clearFilterBlock = true;
+    console.log("setFilterApply", this.completedListData);
   }
 
   filterTrue() {
@@ -187,7 +193,7 @@ async locationDetails() {
       'tbl_trips.truck_number': this.filterForm.value['truck_number'],
       'tbl_trucks.truck_type': this.filterForm.value['truck_type'],
       'tbl_trips.created_on': this.filterForm.value['date'],
-      'tbl_trips.location_id': this.filterForm.value['location'],
+      'tbl_trips.location_id':this.locationIdInfo,
       'tbl_trips.status': 'Filled',
       'tbl_trips.trip_id': '',
     };
@@ -201,11 +207,13 @@ async locationDetails() {
       this.loader.dismissLoader();
       this.filteredListData = resp.data;
       console.log('filteredListData', this.filteredListData);
-
-      this.dataFiltered = this.filteredListData;
-
+      this.completedListData = this.filteredListData;
     });
-
     this.filterForm.reset();
   }
+
+  clearFilterBt(){
+    this.completedList();    
+    this.clearFilterBlock = false;    
+    }
 }

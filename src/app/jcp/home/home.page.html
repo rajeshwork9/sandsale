@@ -3,7 +3,10 @@
     <ion-title class="ion-float-left">Filling List</ion-title>   
     <div class="ion-float-right ion-header-Right">
     <!-- <app-headerbuttons></app-headerbuttons> -->
-    <ion-text class="ion-float-left">{{locationName}}</ion-text>
+
+   
+   <ion-text  class="ion-float-left">{{filterLocName}}</ion-text> 
+
     <ion-button (click)="setOpen(true)"><ion-img src="../../assets/images/map-icon.svg"></ion-img></ion-button>
     <ion-button (click)="filterTrue()"><ion-img class="filterIcon" src="../../assets/images/filter-icon.svg"></ion-img></ion-button>
   </div>
@@ -12,6 +15,11 @@
 
 
 <ion-content [fullscreen]="true" class="bgWrapp fillingListWrapp">
+
+  <div class="clearFilterB " *ngIf="clearFilterBlock">
+    <ion-button (click)="clearFilterBt()" class=" ion-float-right" color="dark" fill="solid" shape="round">Clear Filter</ion-button>
+</div>
+
   <ng-template [ngIf]="fillingListData && fillingListData.length===0">
     <app-nodata></app-nodata>
   </ng-template>
@@ -107,7 +115,7 @@
     </ng-template>
 </ion-modal>
 
-<!-- location Modal -->
+<!-- location Modal <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false" class="locationModalWrapp"> -->
 <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false" class="locationModalWrapp">
   <ng-template>
     <ion-content class="ion-padding-no">
@@ -186,14 +194,14 @@
             </ion-item>
           </div>
   
-          <div class="ion-formGroup">
+          <!-- <div class="ion-formGroup">
             <ion-label>Location</ion-label>
             <ion-item lines="none">
               <ion-select formControlName="location" aria-label="location" placeholder="Select Location">
                 <ion-select-option *ngFor="let data of locationData" value="{{data.id}}">{{data.location_name}}</ion-select-option>
               </ion-select>
             </ion-item>
-          </div>
+          </div> -->
         </div>
       </form>
 

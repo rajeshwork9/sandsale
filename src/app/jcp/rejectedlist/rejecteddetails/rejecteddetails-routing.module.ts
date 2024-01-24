@@ -5,7 +5,7 @@ import { RejecteddetailsPage } from './rejecteddetails.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: RejecteddetailsPage
   }
 ];

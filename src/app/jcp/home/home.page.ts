@@ -49,14 +49,17 @@ export class HomePage implements OnInit {
   rejectedNotes: any;
   rejectedId: any;
   truckTypeListData: any;
-  
-  locationName:any;
+
+  locationName: any;
   filteredListData: any;
   isFilterModalOpen: boolean = false;
   dataFiltered: any;
-
+  clearFilterBlock: boolean = false;
+  Filterlocdata : any ;
+  filterLocName: any;
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
+    console.log('this.isModalOpen', this.isModalOpen);
   }
 
   setRejectionOpen(isOpen: boolean, id: any) {
@@ -77,19 +80,17 @@ export class HomePage implements OnInit {
       truck_number: [null],
       truck_type: [null],
       date: [null],
-      location: [null],
+      // location: [null],
     });
   }
 
   ngOnInit() {
-    // this.fillingList();
     this.locationDetails();
-    this.fillingList();
+    // this.fillingList();
   }
 
   async locationDetails() {
     // await this.loader.showLoader();
-
     let payload = {
       columns: this.locationColumns,
       order_by: this.locationOrder,
@@ -99,7 +100,7 @@ export class HomePage implements OnInit {
     this.common.getLocations(payload).subscribe((resp: any) => {
       console.log(resp.data);
       this.locationData = resp.data;
-      // console.log("locationData",this.locationData);
+     console.log("locationData",this.locationData);
     });
   }
 
@@ -107,10 +108,16 @@ export class HomePage implements OnInit {
     this.selectedLocId = event.detail.value;
     console.log('selectedLocId', this.selectedLocId);
     localStorage.setItem('locationId', this.selectedLocId);
+ 
+
     this.isModalOpen = false;
-    this.fillingList();
-    this.locationName = this.filteredListData[0].location_name;
-    console.log('locationName', this.locationName);
+    this.fillingList(); 
+  
+    this.filterLocName = this.locationData.filter((loc:any) => loc.id === this.selectedLocId);
+    this.filterLocName = this.filterLocName[0].location_name;
+    // localStorage.removeItem('locationName');
+    localStorage.setItem('locationName', this.filterLocName);
+    console.log("filterLocName", this.filterLocName);
   }
 
   async fillingList() {
@@ -148,18 +155,17 @@ export class HomePage implements OnInit {
       this.loader.dismissLoader();
       console.log(resp.data);
       this.fillingListData = resp.data;
-
-      this.locationName = this.fillingListData[0].location_name;
-      console.log('locationName', this.locationName);
     });
   }
 
-// Filter
+  // Filter
   setFilterOpen(isOpen: boolean) {
     this.filteredList();
     this.isFilterModalOpen = isOpen;
     this.truckTypesList();
+    this.clearFilterBlock = true;
     this.fillingList = this.dataFiltered;
+    console.log('setFilterApply', this.fillingList);
   }
 
   filterTrue() {
@@ -191,7 +197,7 @@ export class HomePage implements OnInit {
       'tbl_trips.truck_number': this.filterForm.value['truck_number'],
       'tbl_trucks.truck_type': this.filterForm.value['truck_type'],
       'tbl_trips.created_on': this.filterForm.value['date'],
-      'tbl_trips.location_id': this.filterForm.value['location'],
+      'tbl_trips.location_id': this.selectedLocId,
       'tbl_trips.status': 'Yet to Fill',
       'tbl_trips.trip_id': '',
     };
@@ -207,13 +213,12 @@ export class HomePage implements OnInit {
       console.log('filteredListData', this.filteredListData);
 
       this.dataFiltered = this.filteredListData;
-
     });
 
     this.filterForm.reset();
   }
 
-// Filter
+  // Filter
 
   async accept(id: any) {
     await this.loader.showLoader();
@@ -231,7 +236,7 @@ export class HomePage implements OnInit {
       header: '',
       message: 'Are you sure you want to fill the truck?',
       cssClass: 'custom-alert',
-      buttons: [        
+      buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
@@ -282,5 +287,10 @@ export class HomePage implements OnInit {
       this.truckTypeListData = resp.data;
       console.log('truckTypeListData', this.truckTypeListData);
     });
+  }
+
+  clearFilterBt() {
+    this.filteredList();
+    this.clearFilterBlock = false;
   }
 }

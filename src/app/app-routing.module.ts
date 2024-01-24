@@ -43,10 +43,6 @@ const routes: Routes = [
     loadChildren: () => import('./jcp/completedlist/completeddetails/completeddetails.module').then( m => m.CompleteddetailsPageModule)
   },
 
-  {
-    path: 'completeddetails',
-    loadChildren: () => import('./jcp/completedlist/completeddetails/completeddetails.module').then( m => m.CompleteddetailsPageModule)
-  },
 
     {
     path: 'rejecteddetails',

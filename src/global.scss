@@ -231,13 +231,16 @@ ion-header {
         font-size:0.938rem;
         font-weight:600;
         padding-top:8px;
+        font-weight:500;
     }
 
     ion-text {
-        font-size: 0.8rem;
+        font-size: 0.875rem;
         color: #fff;
         margin-right: 7px;
         margin-top:9px;
+        font-weight: 600;
+       text-shadow:0rem 0.1rem 0.2rem rgb(23 88 140) !important;
     }
 
     ion-button {
@@ -651,6 +654,22 @@ ion-alert.custom-alert {
         margin-right: 20px !important;
         span {
             justify-content: center !important;
+        }
+    }
+}
+
+.clearFilterB {
+    display: inline-block;
+    width: 100%;
+
+    ion-button {
+        margin: 10px 15px 0px 0px;
+        float: right;
+
+        ion-img {
+            width: 13px;
+            margin-right: 4px;
+            filter: invert(100%) sepia(171%) saturate(100%) hue-rotate(188deg) brightness(128%) contrast(200%);
         }
     }
 }
