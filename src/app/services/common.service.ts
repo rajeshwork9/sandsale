@@ -14,19 +14,15 @@ export class CommonService {
   constructor(
     private http: HttpClient
   ) {
-    let userInfo:any = localStorage.getItem('userData')
-    // console.log(userInfo);
-    this.userData = JSON.parse(userInfo)
-    // console.log(this.userData);
-    this.bearerToken = this.userData.api_token
-    // console.log(this.bearerToken);  
+
    }
 
   getLocations(body: any):Observable<any>{
     return Observable.create((Observer: any)=>{
+      let bearerToken = this.getToken();
       const headers: HttpHeaders = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': "Bearer "+this.bearerToken,
+        'Authorization': "Bearer "+bearerToken,
       })
       console.log(headers);
       
@@ -50,9 +46,10 @@ export class CommonService {
 
   getFillingList(body: any):Observable<any>{
     return Observable.create((Observer: any)=>{
+      let bearerToken = this.getToken();
       const headers: HttpHeaders = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': "Bearer "+this.bearerToken,
+        'Authorization': "Bearer "+bearerToken,
       })
       console.log(headers);
       
@@ -76,9 +73,10 @@ export class CommonService {
 
   acceptTrip(body: any):Observable<any>{
     return Observable.create((Observer: any)=>{
+      let bearerToken = this.getToken();
       const headers: HttpHeaders = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': "Bearer "+this.bearerToken,
+        'Authorization': "Bearer "+bearerToken,
       })
       console.log(headers);
       
@@ -102,9 +100,10 @@ export class CommonService {
 
   getCompletedList(body: any):Observable<any>{
     return Observable.create((Observer: any)=>{
+      let bearerToken = this.getToken();
       const headers: HttpHeaders = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': "Bearer "+this.bearerToken,
+        'Authorization': "Bearer "+bearerToken,
       })
       console.log(headers);
       
@@ -128,9 +127,10 @@ export class CommonService {
 
   rejectTrip(body: any):Observable<any>{
     return Observable.create((Observer: any)=>{
+      let bearerToken = this.getToken();
       const headers: HttpHeaders = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': "Bearer "+this.bearerToken,
+        'Authorization': "Bearer "+bearerToken,
       })
       const options = { headers: headers };
       let nativeHttpCall = this.http.post(environment.apiUrl + 'reject-trip', body,options);
@@ -150,9 +150,10 @@ export class CommonService {
 
   getRejectedList(body: any):Observable<any>{
     return Observable.create((Observer: any)=>{
+      let bearerToken = this.getToken();
       const headers: HttpHeaders = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': "Bearer "+this.bearerToken,
+        'Authorization': "Bearer "+bearerToken,
       })
       console.log(headers);
       
@@ -177,9 +178,10 @@ export class CommonService {
 
   getTruckTypesList(body: any):Observable<any>{
     return Observable.create((Observer: any)=>{
+      let bearerToken = this.getToken();
       const headers: HttpHeaders = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': "Bearer "+this.bearerToken,
+        'Authorization': "Bearer "+bearerToken,
       });
       const options = { headers: headers };
       let nativeHttpCall = this.http.post(environment.apiUrl + 'truck-types', body,options);
@@ -195,6 +197,15 @@ export class CommonService {
         }
       );
     })
+  }
+
+  getToken(){
+    let userInfo:any = localStorage.getItem('userData')
+    this.userData = JSON.parse(userInfo)
+    // console.log(this.userData);
+    let bearerToken = this.userData.api_token
+    console.log(bearerToken);
+    return bearerToken;
   }
 
 }
