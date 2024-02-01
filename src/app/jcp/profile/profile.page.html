@@ -7,8 +7,17 @@
 <ion-content class="bgWrapp porfileWrapp m-top">
   <div class="porfileUserblock">
     <div class="porfilePosition">
-      <ion-icon class="personIcon" name="person-outline"></ion-icon>
-      <ion-button class="editBt"><ion-img src="../../assets/images/edit-icon.svg"></ion-img></ion-button>
+
+        <ng-container *ngIf="profilePic">
+     <!-- <ion-img [src]="profilePic"/> -->
+        </ng-container>
+        <ng-container *ngIf="profilePic==''">
+          <ion-icon class="personIcon" name="person-outline"></ion-icon>
+        </ng-container>   
+ 
+      
+   
+      <ion-button (click)="capturePhoto()" class="editBt"><ion-img src="../../assets/images/edit-icon.svg"></ion-img></ion-button>
     </div>
   </div>
 
@@ -16,7 +25,7 @@
     <div class="porfileCardSapce">
      <ion-text>
         <h1>{{userFirstName}} {{userLastName}}</h1>
-        <h6>JCB Driver</h6>
+        <h6>{{roleName}}</h6>
       </ion-text>
 
 
@@ -39,16 +48,15 @@
       </div>
     </div>
 
-
       <ion-buttons class="logoutBlock">
         <ion-button color="secondary" fill="outline" shape="round" (click)="logout()">
           <ion-icon name="log-out-outline"></ion-icon> Logout
         </ion-button>
       </ion-buttons>
 
-
   </ion-card>
 </ion-content>
 
+<!-- <ion-action-sheet trigger="openProfileImgEdit" header="Select camara or gallery" [buttons]="actionProfileImgEditButtons"></ion-action-sheet> -->
 
 <app-fotterbuttons></app-fotterbuttons>

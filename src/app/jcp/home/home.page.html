@@ -6,8 +6,8 @@
 
    
    <ion-text  class="ion-float-left">{{filterLocName}}</ion-text> 
-
-    <ion-button (click)="setOpen(true)"><ion-img src="../../assets/images/map-icon.svg"></ion-img></ion-button>
+   <!-- (click)="setOpen(true)" -->
+    <ion-button (click)="locationBt()"><ion-img src="../../assets/images/map-icon.svg"></ion-img></ion-button>
     <ion-button (click)="filterTrue()"><ion-img class="filterIcon" src="../../assets/images/filter-icon.svg"></ion-img></ion-button>
   </div>
   </ion-toolbar>
@@ -64,8 +64,8 @@
             {{data.created_on | date:'dd-MM-yyyy H:mm'}}
           </div>
           <div class="ion-float-right">
-            <ion-button (click)="presentActionSheet(data)" class="ion-padding-end" color="primary"  fill="solid" shape="round">Filling</ion-button>
-            <ion-button (click)="setRejectionOpen(true,data.trip_id)" color="secondary" fill="solid" shape="round">Reject</ion-button>
+            <ion-button (click)="presentActionSheet(data)" class="ion-padding-end fillBt" color="primary"  fill="solid" shape="round">Fill</ion-button>
+            <ion-button (click)="setRejectionOpen(true,data.trip_id,data.truck_number)" color="secondary" fill="solid" shape="round">Reject</ion-button>
           </div>
         </div>
       </ion-card-content>
@@ -87,7 +87,7 @@
               <ion-img src="../../assets/images/filling-truck-icon.svg"></ion-img>
             </ion-avatar>
             <ion-text>
-              <h4>TS12345675</h4>  
+              <h4>{{rejectedTrucknumber}}</h4>  
               <p>Truck Number</p>          
             </ion-text>
           </ion-item>
@@ -146,8 +146,8 @@
     <ion-footer>
       <ion-toolbar>
         <ion-buttons slot="end">
-          <ion-button color="medium" fill="outline" shape="round" (click)="setOpen(false)">Close</ion-button>
-          <ion-button color="primary" fill="outline" shape="round" (click)="setOpen(false)">Submit</ion-button>
+          <ion-button color="medium" fill="outline" shape="round" *ngIf="locationClose"  (click)="setOpen(false)">Close</ion-button>
+          <ion-button color="primary" fill="outline" shape="round" [disabled]="!disabledLocationSubmit" (click)="locationSubmit()">Submit</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-footer>

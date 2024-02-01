@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
@@ -11,11 +11,17 @@ import { LoaderService } from 'src/app/services/loader.service';
 export class RejecteddetailsPage implements OnInit {
   rejectedListData: any;
   locationIdInfo:any;
+  activatedRouteId:any;
   constructor(
     private common: CommonService,   
     private loader: LoaderService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private route:ActivatedRoute, 
+  ) {
+    this.route.snapshot.paramMap.get('id');
+    this.activatedRouteId =  this.route.snapshot.paramMap.get('id');
+    console.log("activatedRouteId", this.activatedRouteId);
+   }
 
   ngOnInit() {
     this.locationIdInfo = localStorage.getItem('locationId');
@@ -33,9 +39,10 @@ export class RejecteddetailsPage implements OnInit {
       'tbl_trips.status',
       'vehicle_entry',
       'vehicle_exit',
-      'trip_date',
+      'trip_date',      
       'tbl_trips.updated_on',
-    ];
+      'tbl_trips.reject_notes',
+     ];
     let filledOrder: any = {
       'tbl_trips.plate_region': 'asc',
       'tbl_trips.created_on': 'asc',
@@ -46,7 +53,9 @@ export class RejecteddetailsPage implements OnInit {
       'tbl_trips.created_on': '',
       'tbl_trips.location_id':this.locationIdInfo,
       'tbl_trips.status': 'Rejected',
-      'tbl_trips.trip_id': '',
+      'tbl_trips.trip_id': this.activatedRouteId,
+      'tbl_trips.updated_on':'',
+      'tbl_trips.reject_notes':'',
     };
     
     let payload = {

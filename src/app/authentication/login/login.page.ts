@@ -59,11 +59,15 @@ export class LoginPage implements OnInit {
   this.loginService.login(data).pipe(finalize(()=>{
     this.loader.dismissLoader();
   })).subscribe((resp: any)=>{
-    console.log(resp.status);
+    console.log("resp.status", resp.data);
     
     if(resp.status == 200){
       this.toastService.showSuccess('Successfully Login', 'Success');
       localStorage.setItem("userData",JSON.stringify(resp.data));
+
+      localStorage.setItem("accessToken",JSON.stringify(resp.data[0].api_token));
+
+
       this.loginForm.reset()
       this.submitted = false; 
       console.log("response login", resp)

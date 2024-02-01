@@ -14,6 +14,87 @@ export class HomePage implements OnInit {
   filterForm: FormGroup;
   isModalOpen = true;
   isRejectionModalOpen = false;
+  locationClose=false;
+ 
+
+  truckTypeFilters: any = {};
+
+  locationData: any;
+  selectedLocId: any;
+  selectedLocName: any;
+  fillingListData: any;
+  subLocId: any;
+  rejectedNotes: any;
+  rejectedId: any;
+  rejectedTrucknumber:any;
+  truckTypeListData: any;
+
+  locationName: any;
+  filteredListData: any;
+  isFilterModalOpen: boolean = false;
+  dataFiltered: any;
+  clearFilterBlock: boolean = false;
+  Filterlocdata : any ;
+  filterLocName: any;
+  disabledLocationSubmit:boolean = false;
+
+
+
+  constructor(
+    private common: CommonService,
+    private loader: LoaderService,
+    private locationSer: LocationService,
+    private actionSheetController: ActionSheetController,
+    private fb: FormBuilder,
+    private alertController: AlertController
+  ) {
+    this.filterForm = this.fb.group({
+      truck_number: [null],
+      truck_type: [null],
+      date: [null],
+      // location: [null],
+    });
+
+
+  }
+
+  ngOnInit() {
+    this.locationDetails();
+    // this.fillingList();
+this.disabledLocationSubmit=false;
+  }
+
+    
+
+
+  setRejectionOpen(isOpen: boolean, id: any, trucknumber:any) {
+    this.rejectedId = id;
+    this.rejectedTrucknumber=trucknumber;
+    console.log("setRejectionOpenID", this.rejectedId);
+    console.log("setRejectionOpenTrucknumber", this.rejectedTrucknumber);
+    
+    this.isRejectionModalOpen = isOpen;
+    this.disabledLocationSubmit= true;
+  }
+
+  // Location
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+    console.log('this.isModalOpen', this.isModalOpen);
+   
+  }
+
+  locationSubmit(){
+    this.isModalOpen = false;
+    this.fillingList(); 
+
+  }
+
+  locationBt(){
+    this.isModalOpen = true;
+    this.locationClose=true;
+  }
+
   locationColumns: any = [
     'id',
     'location_name',
@@ -38,57 +119,6 @@ export class HomePage implements OnInit {
   truckTypeOrderBy: any = {
     id: 'asc',
   };
-
-  truckTypeFilters: any = {};
-
-  locationData: any;
-  selectedLocId: any;
-  selectedLocName: any;
-  fillingListData: any;
-  subLocId: any;
-  rejectedNotes: any;
-  rejectedId: any;
-  truckTypeListData: any;
-
-  locationName: any;
-  filteredListData: any;
-  isFilterModalOpen: boolean = false;
-  dataFiltered: any;
-  clearFilterBlock: boolean = false;
-  Filterlocdata : any ;
-  filterLocName: any;
-  setOpen(isOpen: boolean) {
-    this.isModalOpen = isOpen;
-    console.log('this.isModalOpen', this.isModalOpen);
-  }
-
-  setRejectionOpen(isOpen: boolean, id: any) {
-    this.rejectedId = id;
-    console.log(this.rejectedId);
-    this.isRejectionModalOpen = isOpen;
-  }
-
-  constructor(
-    private common: CommonService,
-    private loader: LoaderService,
-    private locationSer: LocationService,
-    private actionSheetController: ActionSheetController,
-    private fb: FormBuilder,
-    private alertController: AlertController
-  ) {
-    this.filterForm = this.fb.group({
-      truck_number: [null],
-      truck_type: [null],
-      date: [null],
-      // location: [null],
-    });
-  }
-
-  ngOnInit() {
-    this.locationDetails();
-    // this.fillingList();
-  }
-
   async locationDetails() {
     // await this.loader.showLoader();
     let payload = {
@@ -108,17 +138,18 @@ export class HomePage implements OnInit {
     this.selectedLocId = event.detail.value;
     console.log('selectedLocId', this.selectedLocId);
     localStorage.setItem('locationId', this.selectedLocId);
- 
-
-    this.isModalOpen = false;
-    this.fillingList(); 
   
+
     this.filterLocName = this.locationData.filter((loc:any) => loc.id === this.selectedLocId);
     this.filterLocName = this.filterLocName[0].location_name;
     // localStorage.removeItem('locationName');
     localStorage.setItem('locationName', this.filterLocName);
     console.log("filterLocName", this.filterLocName);
+
+    this.disabledLocationSubmit=true;
   }
+
+    // Location End 
 
   async fillingList() {
     await this.loader.showLoader();
@@ -153,7 +184,7 @@ export class HomePage implements OnInit {
     };
     this.common.getFillingList(payload).subscribe((resp: any) => {
       this.loader.dismissLoader();
-      console.log(resp.data);
+      console.log("fillingListData", resp.data);
       this.fillingListData = resp.data;
     });
   }
@@ -218,6 +249,11 @@ export class HomePage implements OnInit {
     this.filterForm.reset();
   }
 
+  clearFilterBt() {
+    this.filteredList();
+    this.clearFilterBlock = false;
+  }
+
   // Filter
 
   async accept(id: any) {
@@ -228,6 +264,7 @@ export class HomePage implements OnInit {
     this.common.acceptTrip(payload).subscribe((resp: any) => {
       console.log(resp.data);
       this.loader.dismissLoader();
+      this.fillingList(); 
     });
   }
 
@@ -249,9 +286,8 @@ export class HomePage implements OnInit {
           text: 'Ok',
           handler: () => {
             this.accept(data.trip_id);
-            console.log(data.trip_id);
-            this.fillingList();
-          },
+            console.log("fillingListOK", data.trip_id);
+            },
           cssClass: 'alert-button-confirm',
         },
       ],
@@ -264,20 +300,22 @@ export class HomePage implements OnInit {
     this.isRejectionModalOpen = false;
   }
 
-  async reject() {
+reject() {
     if (this.rejectedId) {
       let payload = {
-        trip_id: 1,
+        trip_id: this.rejectedId,
         reject_notes: this.rejectedNotes,
       };
       this.common.rejectTrip(payload).subscribe((resp: any) => {
         this.rejectClose();
         console.log(resp);
+        this.loader.dismissLoader();
+        this.fillingList(); 
       });
     }
   }
 
-  async truckTypesList() {
+  truckTypesList() {
     let payload = {
       columns: this.truckTypeColumns,
       order_by: this.truckTypeOrderBy,
@@ -289,8 +327,5 @@ export class HomePage implements OnInit {
     });
   }
 
-  clearFilterBt() {
-    this.filteredList();
-    this.clearFilterBlock = false;
-  }
+
 }

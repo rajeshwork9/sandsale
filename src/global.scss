@@ -62,6 +62,8 @@ body {
     text-transform: capitalize;
 }
 
+
+
 .ion-login {
     --background: url('assets/images/bglogin.png') no-repeat center left / cover;
 }
@@ -210,6 +212,12 @@ small.error-message{
 
     .ion-padding-end {
         padding-right:2px;
+    }
+
+    .fillBt{
+        --padding-start:1.5rem;
+        --padding-end: 1.5rem;
+    
     }
 
 }

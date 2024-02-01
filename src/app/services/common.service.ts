@@ -199,11 +199,35 @@ export class CommonService {
     })
   }
 
+
+  // getProfilePic(body:any):Observable<any>{
+  //   return Observable.create((Observer: any)=>{
+  //     let bearerToken = this.getToken();
+  //     const headers: HttpHeaders = new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       'Authorization': "Bearer "+bearerToken,
+  //     });
+  //     const options = { headers: headers };
+  //     let nativeHttpCall = this.http.post(environment.apiUrl + 'upload-avatar', body,options);
+  //     from(nativeHttpCall).subscribe(
+  //       (res: any) => {
+  //         // console.log(res);
+  //         Observer.next(res);
+  //         Observer.complete();
+  //       },
+  //       (err: any) => {
+  //         Observer.error(err);
+  //         Observer.complete();
+  //       }
+  //     );
+  //   })
+  // }
+
   getToken(){
     let userInfo:any = localStorage.getItem('userData')
     this.userData = JSON.parse(userInfo)
     // console.log(this.userData);
-    let bearerToken = this.userData.api_token
+    let bearerToken = this.userData[0].api_token
     console.log(bearerToken);
     return bearerToken;
   }
