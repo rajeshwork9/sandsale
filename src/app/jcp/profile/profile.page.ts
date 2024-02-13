@@ -20,6 +20,10 @@ export class ProfilePage implements OnInit {
   profilePic: any = '';
   imageBase=environment.imgUrl;
   userAvatar:any;
+  getCamPhoto:any;
+
+  avatarData:any;
+
   constructor(
     private router: Router,
     private toastService: ToastService,
@@ -29,13 +33,25 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     let userInfo: any = localStorage.getItem('userData');
+   
+    // localStorage.setItem("conference", JSON.stringify(data));
     this.userData = JSON.parse(userInfo);
     this.userFirstName = this.userData[0].first_name;
     this.userLastName = this.userData[0].last_name;
     this.userAvatar = this.userData[0].avatar;
     this.roleName = this.userData[0].role_name;
+    this.profilePic = this.imageBase+this.userData[0].avatar;
+
     this.selectedLang = 'en';
-    // this.getProfile();
+
+console.log("environment", this.profilePic);
+ 
+
+ let avatarDatapic:any = localStorage.getItem('avatarData');
+ this.profilePic = avatarDatapic;
+
+
+
   }
 
   logout() {
@@ -79,23 +95,57 @@ export class ProfilePage implements OnInit {
       source: CameraSource.Camera,
     });
 
+    this.getCamPhoto = image.webPath;
     console.log('image', image);
-    // this.startUpload(image.webPath);
+    console.log("this.getCamPhoto", this.getCamPhoto)
+    this.filefetch(image.webPath)
+
   }
 
-  // async getProfile() {
-  //   await this.loader.showLoader();
-  //   let payload = {
-  //     'avatar':'',
-  //     'existing_avatar':'',
-  //   };
-  //   this.common.getProfilePic(payload).subscribe((resp: any) => {
+
+
+
+
+  async filefetch(file:any){
+    const response = await fetch(file);
+    const blob = await response.blob();
+    const formData = new FormData(); 
+    const random = Math.floor(Math.random() * (999999 - 100000)) + 100000000000000000;
+    const imageFle = random + '.jpg';  
+    formData.append('avatar', blob, imageFle);
+    console.log("blob",blob); 
+    console.log("formData",formData); 
+    console.log("response",response); 
+    this.uploadData(formData);
+  }
+
+  async uploadData(payload:any){   
+   this.common.uploadAvatarPic(payload).subscribe((resp: any)=>{
+    this.avatarData = resp.data;
+    // this.profilePic=this.imageBase+resp.data
+      console.log("avatarData", this.avatarData);
+      if(resp.data[0].profile_img!==null){
+        this.profilePic=this.imageBase+resp.data
+       }else{
+        this.profilePic=''
+       }
+
+     console.log("---profilePic",  this.profilePic)
+     localStorage.setItem('avatarData', this.profilePic);
+    });
+  }
+
+  //   async getProfile(payload:any) {
+
+
+  //   this.common.uploadAvatarPic(payload).subscribe((resp: any) => {
   //     if (resp.status == 'success') {
   //       if (resp.data[0].avatar !== null) {
-  //         this.profilePic = this.imageBase + resp.data[0].avatar;
+  //         this.profilePic = resp.data[0].avatar;
   //       } else {
-  //         this.profilePic = '';
+  //         this.profilePic ='';
   //       }
+  //       console.log("profilePicResp", this.profilePic);
   //     }
   //   });
   // }

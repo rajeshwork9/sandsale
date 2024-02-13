@@ -461,13 +461,36 @@ ion-header {
         }
     
         .personIcon {
-            border-radius: 50%;
-            padding:19px;
+            border-radius: 50%;            
             border: 3px solid #F1F6FD;
-            font-size: 41px;
             background: #fff;
             color: #616787;
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            overflow: hidden;
+            ion-icon{
+                margin-top: 20px;
+                font-size:41px;
+            }
         }
+
+                         .personImg {
+                             border-radius: 50%;
+                             border: 3px solid #F1F6FD;
+                             background: #fff;
+                             color: #616787;
+                             width: 90px;
+                             height: 90px;
+                             margin: auto;
+                             overflow: hidden;
+            
+                             ion-img {
+                                 object-fit: cover;
+                             }
+                         }
+
+        
     
     }
 }

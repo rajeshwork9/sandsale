@@ -38,8 +38,6 @@ export class HomePage implements OnInit {
   filterLocName: any;
   disabledLocationSubmit:boolean = false;
 
-
-
   constructor(
     private common: CommonService,
     private loader: LoaderService,
@@ -62,6 +60,7 @@ export class HomePage implements OnInit {
     this.locationDetails();
     // this.fillingList();
 this.disabledLocationSubmit=false;
+
   }
 
     
@@ -137,15 +136,13 @@ this.disabledLocationSubmit=false;
   onLocationChange(event: any) {
     this.selectedLocId = event.detail.value;
     console.log('selectedLocId', this.selectedLocId);
-    localStorage.setItem('locationId', this.selectedLocId);
-  
+    localStorage.setItem('locationId', this.selectedLocId);  
 
     this.filterLocName = this.locationData.filter((loc:any) => loc.id === this.selectedLocId);
     this.filterLocName = this.filterLocName[0].location_name;
     // localStorage.removeItem('locationName');
     localStorage.setItem('locationName', this.filterLocName);
     console.log("filterLocName", this.filterLocName);
-
     this.disabledLocationSubmit=true;
   }
 

@@ -84,7 +84,7 @@ export class RejectedlistPage implements OnInit {
 
     this.common.getRejectedList(payload).subscribe((resp: any) => {
       this.loader.dismissLoader();
-      console.log("rejectedresp", resp.data);
+      // console.log("rejectedresp", resp.data);
        this.rejectedListData = resp.data;
        console.log("rejectedListData",  this.rejectedListData);
       //  this.locationName = this.completedListData[0].location_name;

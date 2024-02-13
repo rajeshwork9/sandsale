@@ -71,7 +71,6 @@
       </ion-card-content>
     </ion-card>
   </ng-template>
-
 </ion-content>
 
 
@@ -135,8 +134,8 @@
         <div class="">
           <ion-label>Location</ion-label>
           <ion-item lines="none">
-            <ion-select aria-label="Location" label="Select Location" label-placement="floating" (ionChange)="onLocationChange($event)" >
-              <ion-select-option *ngFor="let data of locationData" value="{{data.id}}">{{data.location_name}}</ion-select-option>
+            <ion-select aria-label="Location" label="Select Location" label-placement="floating" (ionChange)="onLocationChange($event)" value="{{selectedLocId}}">
+              <ion-select-option *ngFor="let data of locationData" value="{{data.id}}" >{{data.location_name}}</ion-select-option>
             </ion-select>
           </ion-item>
         </div>

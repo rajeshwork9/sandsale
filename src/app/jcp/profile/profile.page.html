@@ -9,10 +9,14 @@
     <div class="porfilePosition">
 
         <ng-container *ngIf="profilePic">
-     <!-- <ion-img [src]="profilePic"/> -->
-        </ng-container>
+          <div class="personImg">
+          <ion-img [src]="profilePic"/> 
+        </div>
+        </ng-container> 
         <ng-container *ngIf="profilePic==''">
-          <ion-icon class="personIcon" name="person-outline"></ion-icon>
+          <div class="personIcon">
+          <ion-icon  name="person-outline"></ion-icon>
+          </div>
         </ng-container>   
  
       

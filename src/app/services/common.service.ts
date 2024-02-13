@@ -200,28 +200,35 @@ export class CommonService {
   }
 
 
-  // getProfilePic(body:any):Observable<any>{
-  //   return Observable.create((Observer: any)=>{
-  //     let bearerToken = this.getToken();
-  //     const headers: HttpHeaders = new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': "Bearer "+bearerToken,
-  //     });
-  //     const options = { headers: headers };
-  //     let nativeHttpCall = this.http.post(environment.apiUrl + 'upload-avatar', body,options);
-  //     from(nativeHttpCall).subscribe(
-  //       (res: any) => {
-  //         // console.log(res);
-  //         Observer.next(res);
-  //         Observer.complete();
-  //       },
-  //       (err: any) => {
-  //         Observer.error(err);
-  //         Observer.complete();
-  //       }
-  //     );
-  //   })
-  // }
+  uploadAvatarPic(body:any):Observable<any>{
+    return Observable.create((Observer: any)=>{
+      let bearerToken = this.getToken();
+      const headers: HttpHeaders | any = new HttpHeaders(
+        {
+        // 'Content-Type': 'multipart/form-data',
+        'Authorization': "Bearer "+bearerToken,
+        
+      }
+      );
+      headers.set('Content-Type', null);
+      headers.set('Accept', "multipart/form-data");
+  
+
+      const options = { headers: headers };
+      let nativeHttpCall = this.http.post(environment.apiUrl + 'upload-avatar', body,options);
+      from(nativeHttpCall).subscribe(
+        (res: any) => {
+          // console.log(res);
+          Observer.next(res);
+          Observer.complete();
+        },
+        (err: any) => {
+          Observer.error(err);
+          Observer.complete();
+        }
+      );
+    })
+  }
 
   getToken(){
     let userInfo:any = localStorage.getItem('userData')
