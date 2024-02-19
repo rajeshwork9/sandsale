@@ -8,20 +8,26 @@
   <div class="porfileUserblock">
     <div class="porfilePosition">
 
-        <ng-container *ngIf="profilePic">
+     
+      <div class="personIcon">
+        <ion-icon  name="person-outline"></ion-icon>
+        </div>
+
+
+        <!-- <ng-container *ngIf="profilePic">
           <div class="personImg">
           <ion-img [src]="profilePic"/> 
         </div>
-        </ng-container> 
-        <ng-container *ngIf="profilePic==''">
+        </ng-container>  -->
+        <!-- <ng-container *ngIf="profilePic==''">
           <div class="personIcon">
           <ion-icon  name="person-outline"></ion-icon>
           </div>
-        </ng-container>   
+        </ng-container>    -->
  
       
    
-      <ion-button (click)="capturePhoto()" class="editBt"><ion-img src="../../assets/images/edit-icon.svg"></ion-img></ion-button>
+      <!-- <ion-button (click)="capturePhoto()" class="editBt"><ion-img src="../../assets/images/edit-icon.svg"></ion-img></ion-button> -->
     </div>
   </div>
 
@@ -32,8 +38,8 @@
         <h6>{{roleName}}</h6>
       </ion-text>
 
-
-      <ion-button fill="solid" shape="round" expand="block" class="whiteBt" routerLink="/">Change Password</ion-button>
+      <!-- routerLink="/" -->
+      <ion-button fill="solid" shape="round" expand="block" class="whiteBt">Change Password</ion-button>
       <div class="changeLanguageRadio">
         <h4>Change Language</h4>
         <ion-radio-group [value]="selectedLang">

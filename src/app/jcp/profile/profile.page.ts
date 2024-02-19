@@ -99,12 +99,7 @@ console.log("environment", this.profilePic);
     console.log('image', image);
     console.log("this.getCamPhoto", this.getCamPhoto)
     this.filefetch(image.webPath)
-
   }
-
-
-
-
 
   async filefetch(file:any){
     const response = await fetch(file);
@@ -136,8 +131,6 @@ console.log("environment", this.profilePic);
   }
 
   //   async getProfile(payload:any) {
-
-
   //   this.common.uploadAvatarPic(payload).subscribe((resp: any) => {
   //     if (resp.status == 'success') {
   //       if (resp.data[0].avatar !== null) {
@@ -149,8 +142,4 @@ console.log("environment", this.profilePic);
   //     }
   //   });
   // }
-
-
-
-
 }
