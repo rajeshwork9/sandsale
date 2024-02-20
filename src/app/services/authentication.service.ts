@@ -12,6 +12,12 @@ export class AuthenticationService {
     private router: Router
   ) { }
 
+  logOut() {
+    this.router.navigate(['login'])
+    localStorage.clear();
+    localStorage.removeItem('userData');
+  }
+
   canActivate():boolean{
     let userDetails=localStorage.getItem("userData")
     if(userDetails!==null){
