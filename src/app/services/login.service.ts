@@ -10,8 +10,6 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-
-
   login(body: any):Observable<any>{
     return this.http.post(environment.apiUrl+'login',body).pipe(catchError(this.handleError))
   }
@@ -26,7 +24,6 @@ export class LoginService {
     } else {
       // server-side error
       msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      localStorage.removeItem("userData");
 
     }
     return throwError(msg);

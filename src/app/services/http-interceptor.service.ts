@@ -1,8 +1,7 @@
 import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest, HttpHeaders, HttpEvent } from '@angular/common/http';
 import { Inject,Injectable, Injector, InjectionToken } from '@angular/core';
 import { Observable, fromEvent, timeout, tap, catchError, throwError } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
-import { Router } from '@angular/router';
+
 export const DEFAULT_TIMEOUT = new InjectionToken<number>('defaultTimeout');
 export const apiWithoutHeader = [];
 
@@ -13,9 +12,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   private onlineEvent: Observable<Event>;
   private offlineEvent: Observable<Event>;
   constructor(
-    private auth: AuthenticationService,
     private injector: Injector,
-    public router: Router,
     @Inject(DEFAULT_TIMEOUT) protected defaultTimeout: number,  
   ) { 
     this.onlineEvent = fromEvent(window,'online')
@@ -116,15 +113,11 @@ export class HttpInterceptorService implements HttpInterceptor {
     // eslint-disable-next-line @typescript-eslint/member-ordering
     handle401Error(error: HttpErrorResponse): any {
       if (error && error.status === 401) {
-        this.auth.logOut();
-        this.router.navigate(['login']);
-        localStorage.clear();
-        localStorage.removeItem('userData');
-
-   console.log("checl");
         // this.toastService.showError(error.statusText, error.status);
         // console.log('error', error);
             return throwError(error);
+
+         
       }
       // if (!this.refreshTokenInProgress) {
       //   this.refreshTokenInProgress = true;
@@ -138,8 +131,8 @@ export class HttpInterceptorService implements HttpInterceptor {
       //   );
       // }
 
-    localStorage.clear();
-    localStorage.removeItem('userData');
+      localStorage.clear();
+      localStorage.removeItem('userData');
     }
     // eslint-disable-next-line @typescript-eslint/member-ordering
     handle400Error(error: HttpErrorResponse): Observable<HttpEvent<any>> {
