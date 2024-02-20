@@ -1,6 +1,8 @@
 import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest, HttpHeaders, HttpEvent } from '@angular/common/http';
 import { Inject,Injectable, Injector, InjectionToken } from '@angular/core';
 import { Observable, fromEvent, timeout, tap, catchError, throwError } from 'rxjs';
+import { LoginService } from './login.service';
+
 
 export const DEFAULT_TIMEOUT = new InjectionToken<number>('defaultTimeout');
 export const apiWithoutHeader = [];
@@ -11,9 +13,11 @@ export const apiWithoutHeader = [];
 export class HttpInterceptorService implements HttpInterceptor {
   private onlineEvent: Observable<Event>;
   private offlineEvent: Observable<Event>;
+  userData: any;
+  bearerToken: any;
   constructor(
-    private injector: Injector,
-    @Inject(DEFAULT_TIMEOUT) protected defaultTimeout: number,  
+    private injector: Injector, private login: LoginService,
+    @Inject(DEFAULT_TIMEOUT) protected defaultTimeout: number,
   ) { 
     this.onlineEvent = fromEvent(window,'online')
     this.offlineEvent = fromEvent(window, 'offline');
@@ -26,10 +30,19 @@ export class HttpInterceptorService implements HttpInterceptor {
     });
   }
 
+  
+  getToken(){
+    let userInfo:any = localStorage.getItem('userData')
+    this.userData = JSON.parse(userInfo)
+    // console.log(this.userData);
+    this.bearerToken = this.userData.api_token
+    console.log(this.bearerToken);
+    return this.bearerToken;
+  }
+
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     const timeoutValue = 50000000;//request.headers.get('timeout') || this.defaultTimeout;
     const timeoutValueNumeric = Number(timeoutValue);
-
     if (this.apiWithNoHeaders(request)) {
       return next.handle(request).pipe(
         timeout(timeoutValueNumeric),
@@ -56,26 +69,31 @@ export class HttpInterceptorService implements HttpInterceptor {
     }
   }
 
+
   addToken(req: HttpRequest<any>): HttpRequest<any> {
   
     if(localStorage.getItem("userData")){
+      console.log(localStorage.getItem("userData"));
       const local_user: any = localStorage.getItem("userData");
-    const userData = JSON.parse(local_user);
- 
-    const accessToken = userData.data.token;
+      const userData = JSON.parse(local_user);
+      
+    if (userData && userData.data && userData.data.api_token) {
+    const accessToken = userData.data.api_token;
     if (accessToken) {
-      return req.clone({
-        // headers: req.headers.set('Authorization', `Bearer ${accessToken}`)
-        headers: new HttpHeaders({
-          timeout: '0',
-          'Authorization':`${accessToken}`
-
-        }) //req.headers.set('Authorization', `${accessToken}`)
-      });
+      // return req.clone({
+      //   setHeaders: {
+      //     'Authorization':  `Bearer ${accessToken}`,
+      //     'Content-Type': 'application/json'
+      //   }         
+      // });
+      const headers = req.headers.set('Authorization', `Bearer ${accessToken}`).set('Access-Control-Allow-Origin', '*');
+      console.log(headers);
+      return req.clone({ headers });  
     } else {
       return req;
     }
-    }
+  }
+  }
     return req;
   }
 
@@ -110,34 +128,20 @@ export class HttpInterceptorService implements HttpInterceptor {
   }
 
 
-    // eslint-disable-next-line @typescript-eslint/member-ordering
     handle401Error(error: HttpErrorResponse): any {
       if (error && error.status === 401) {
-        // this.toastService.showError(error.statusText, error.status);
-        // console.log('error', error);
-            return throwError(error);
-
-         
+        this.login.logout();
+        console.log(error,"errorr");
+        return throwError(error);    
       }
-      // if (!this.refreshTokenInProgress) {
-      //   this.refreshTokenInProgress = true;
-      //   this.refreshTokenSubject.next(null);
-      //   return this.getNewToken(req, next);
-      // } else {
-      //   return this.refreshTokenSubject.pipe(
-      //     filter(token => token != null),
-      //     take(1),
-      //     switchMap(token => next.handle(this.addToken(req)))
-      //   );
-      // }
 
       localStorage.clear();
       localStorage.removeItem('userData');
     }
-    // eslint-disable-next-line @typescript-eslint/member-ordering
+
     handle400Error(error: HttpErrorResponse): Observable<HttpEvent<any>> {
       if (error && error.status === 400) {
-        // this.toastService.showError(error.statusText, error.status);
+
         return throwError(error);
       }
   
