@@ -5,6 +5,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { LocationService } from 'src/app/services/location.service';
 import { FormBuilder, FormGroup, NgModel } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-rejectedlist',
@@ -28,7 +29,8 @@ export class RejectedlistPage implements OnInit {
     private loader: LoaderService,
     private locationSer: LocationService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private shared: SharedService
   ) {
     this.filterForm = this.fb.group({
       truck_number: [null],
@@ -39,6 +41,9 @@ export class RejectedlistPage implements OnInit {
   }
 
   ngOnInit() { 
+    this.shared.locations.subscribe((obj: any)=>{
+      console.log("iddjhg",obj);
+    })
    this.locationIdInfo = localStorage.getItem('locationId');
   console.log("locationIdInfo", this.locationIdInfo);
   this.locationName = localStorage.getItem('locationName');

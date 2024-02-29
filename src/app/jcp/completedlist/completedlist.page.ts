@@ -6,6 +6,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { FormBuilder, FormGroup, NgModel } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'app-completedlist',
   templateUrl: './completedlist.page.html',
@@ -32,7 +33,8 @@ export class CompletedlistPage implements OnInit {
     private loader: LoaderService,
     private locationSer: LocationService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private shared: SharedService
   ) {
     this.filterForm = this.fb.group({
       truck_number: [null],
@@ -47,6 +49,9 @@ export class CompletedlistPage implements OnInit {
     console.log('locationIdInfo', this.locationIdInfo);
     this.locationName = localStorage.getItem('locationName');
     console.log("locationName", this.locationName);
+    this.shared.locations.subscribe((obj: any)=>{
+      console.log("iddjhg",obj);
+    })
     this.completedList();
     this.locationDetails();
   }

@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HeaderbuttonsModule } from './shared/headerbuttons/headerbuttons.module';
-import { DEFAULT_TIMEOUT, HttpInterceptorService } from './services/http-interceptor.service';
+import {  HttpInterceptorService } from './services/http-interceptor.service';
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { DEFAULT_TIMEOUT, HttpInterceptorService } from './services/http-interce
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
-  { provide: DEFAULT_TIMEOUT, useValue: 60000 },
+  // { provide: DEFAULT_TIMEOUT, useValue: 60000 },
   ],
   bootstrap: [AppComponent],
 })
