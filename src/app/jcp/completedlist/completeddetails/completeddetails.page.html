@@ -50,14 +50,14 @@
           <ion-item lines="none">
             <ion-text>
               <h6>Entry</h6>
-              <h4>{{data.vehicle_entry}}</h4>
+              <h4>{{data.vehicle_entry | date:'dd MMM yyyy hh:mm a'}}</h4>
               </ion-text>
            </ion-item>
            
            <ion-item lines="none">
             <ion-text>
-              <h6>Sand Filling</h6>
-              <h4>{{data.trip_date}}</h4>
+              <h6>Sand Filled On</h6>
+              <h4>{{data.trip_date | date:'dd MMM yyyy hh:mm a'}}</h4>
               </ion-text>
            </ion-item>
 

@@ -61,7 +61,7 @@
         <div class="item-Bottom-Text">
           <div class="ion-float-left ">
             <ion-icon name="calendar-outline"></ion-icon>
-            {{data.created_on | date:'dd-MM-yyyy H:mm'}}
+            {{data.created_on | date:'dd MMM yyyy hh:mm a'}}
           </div>
           <div class="ion-float-right">
             <ion-button (click)="presentActionSheet(data)" class="ion-padding-end fillBt" color="primary"  fill="solid" shape="round">Fill</ion-button>

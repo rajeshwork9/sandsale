@@ -47,7 +47,11 @@ const routes: Routes = [
     {
     path: 'rejecteddetails',
     loadChildren: () => import('./jcp/rejectedlist/rejecteddetails/rejecteddetails.module').then( m => m.RejecteddetailsPageModule)
+  },  {
+    path: 'location',
+    loadChildren: () => import('./jcp/location/location.module').then( m => m.LocationPageModule)
   }
+
 
 
 

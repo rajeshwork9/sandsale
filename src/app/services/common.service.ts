@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { LoaderService } from './loader.service';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class CommonService {
   bearerToken: any;
   userData: any;
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
   ) {
 
    }
@@ -27,30 +28,6 @@ export class CommonService {
 
   acceptTrip(body: any):Observable<any>{
     return this.http.post(environment.apiUrl + 'accept-trip', body);
-    // return Observable.create((Observer: any)=>{
-    //   let bearerToken = this.getToken();
-    //   const headers: HttpHeaders = new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     'Authorization': "Bearer "+bearerToken,
-    //   })
-    //   console.log(headers);
-      
-    //   const options = { headers: headers };
-    //   console.log(options);
-      
-    //   let nativeHttpCall = this.http.post(environment.apiUrl + 'accept-trip', body,options);
-    //   from(nativeHttpCall).subscribe(
-    //     (res: any) => {
-    //       console.log(res);
-    //       Observer.next(res);
-    //       Observer.complete();
-    //     },
-    //     (err: any) => {
-    //       Observer.error(err);
-    //       Observer.complete();
-    //     }
-    //   );
-    // })
   }
 
   getCompletedList(body: any):Observable<any>{

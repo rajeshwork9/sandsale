@@ -49,20 +49,20 @@
           <ion-item lines="none">
             <ion-text>
               <h6>Entry</h6>
-              <h4>{{data.vehicle_entry}}</h4>
+              <h4>{{data.vehicle_entry | date:'dd MMM yyyy hh:mm a'}}</h4>
               </ion-text>
            </ion-item>
            
            <ion-item lines="none">
             <ion-text>
-              <h6>Rejection Date</h6>
-              <h4>{{data.updated_on}}</h4>
+              <h6>Rejected Date</h6>
+              <h4>{{data.updated_on | date:'dd MMM yyyy hh:mm a'}}</h4>
               </ion-text>
            </ion-item>
 
            <ion-item lines="none">
             <ion-text>
-              <h6>Reason for Rejection</h6>
+              <h6>Reason for Rejected</h6>
               <h4>{{data.reject_notes}}</h4>
               </ion-text>
            </ion-item>

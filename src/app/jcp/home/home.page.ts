@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { LocationService } from 'src/app/services/location.service';
 import { FormBuilder, FormGroup, NgModel } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { SharedService } from 'src/app/services/shared.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -12,13 +12,10 @@ import { AlertController } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
   filterForm: FormGroup;
-  isModalOpen = true;
+  isModalOpen :Boolean | any;
   isRejectionModalOpen = false;
   locationClose=false;
- 
-
   truckTypeFilters: any = {};
-
   locationData: any;
   selectedLocId: any;
   selectedLocName: any;
@@ -28,7 +25,6 @@ export class HomePage implements OnInit {
   rejectedId: any;
   rejectedTrucknumber:any;
   truckTypeListData: any;
-
   locationName: any;
   filteredListData: any;
   isFilterModalOpen: boolean = false;
@@ -41,26 +37,38 @@ export class HomePage implements OnInit {
   constructor(
     private common: CommonService,
     private loader: LoaderService,
-    private locationSer: LocationService,
-    private actionSheetController: ActionSheetController,
     private fb: FormBuilder,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private shared: SharedService
   ) {
     this.filterForm = this.fb.group({
-      truck_number: [null],
-      truck_type: [null],
-      date: [null],
-      // location: [null],
+      truck_number: [],
+      truck_type: [],
+      date: [],
     });
 
+    if(this.filterLocName !== ''){
+      this.isModalOpen = false;
+    }
+    if(this.filterLocName === '') {
+      this.isModalOpen = true;
+    }
 
   }
 
   ngOnInit() {
-    this.locationDetails();
+    // console.log("higj");
+    // this.selectedLocId = localStorage.getItem('locationId');
+    // console.log(this.selectedLocId);
     // this.fillingList();
-this.disabledLocationSubmit=false;
+  }
 
+  ionViewWillEnter(){
+    console.log("higj");
+    this.selectedLocId = localStorage.getItem('locationId');
+    this.filterLocName = localStorage.getItem('locationName');
+    console.log(this.selectedLocId);
+    this.fillingList();
   }
 
     
@@ -97,7 +105,6 @@ this.disabledLocationSubmit=false;
   locationColumns: any = [
     'id',
     'location_name',
-    'location_anpr',
     'status',
     'created_on',
   ];
@@ -134,19 +141,15 @@ this.disabledLocationSubmit=false;
   }
 
   onLocationChange(event: any) {
+    console.log(event);
     this.selectedLocId = event.detail.value;
-    console.log('selectedLocId', this.selectedLocId);
-    localStorage.setItem('locationId', this.selectedLocId);  
-
     this.filterLocName = this.locationData.filter((loc:any) => loc.id === this.selectedLocId);
     this.filterLocName = this.filterLocName[0].location_name;
-    // localStorage.removeItem('locationName');
     localStorage.setItem('locationName', this.filterLocName);
-    console.log("filterLocName", this.filterLocName);
     this.disabledLocationSubmit=true;
   }
 
-    // Location End 
+  // Location End 
 
   async fillingList() {
     await this.loader.showLoader();
@@ -193,7 +196,7 @@ this.disabledLocationSubmit=false;
     this.truckTypesList();
     this.clearFilterBlock = true;
     this.fillingList = this.dataFiltered;
-    console.log('setFilterApply', this.fillingList);
+    // console.log('setFilterApply', this.fillingList);
   }
 
   filterTrue() {

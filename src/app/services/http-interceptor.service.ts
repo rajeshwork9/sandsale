@@ -2,10 +2,7 @@ import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest, HttpHeade
 import { Inject,Injectable, Injector, InjectionToken } from '@angular/core';
 import { Observable, fromEvent, timeout, tap, catchError, throwError } from 'rxjs';
 import { LoginService } from './login.service';
-
-
-// export const DEFAULT_TIMEOUT = new InjectionToken<number>('defaultTimeout');
-// export const apiWithoutHeader = [];
+import { LoaderService } from './loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +11,8 @@ export class HttpInterceptorService implements HttpInterceptor {
   private onlineEvent: Observable<Event>;
   private offlineEvent: Observable<Event>;
   userData: any;
-  // bearerToken: any;
   constructor(
-    private injector: Injector, private login: LoginService,
-    // @Inject(DEFAULT_TIMEOUT) protected defaultTimeout: number,
+    private injector: Injector, private login: LoginService,private loader: LoaderService
   ) { 
     this.onlineEvent = fromEvent(window,'online')
     this.offlineEvent = fromEvent(window, 'offline');
@@ -30,43 +25,9 @@ export class HttpInterceptorService implements HttpInterceptor {
     });
   }
 
-  
-  // getToken(){
-  //   let userInfo:any = localStorage.getItem('userData')
-  //   this.userData = JSON.parse(userInfo) 
-  //   this.bearerToken = this.userData.api_token
-  //   console.log(this.bearerToken);
-  //   return this.bearerToken;
-  // }
-
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const timeoutValue = 50000000;
     const timeoutValueNumeric = Number(timeoutValue);
-    // if (this.apiWithNoHeaders(request)) {
-    //   return next.handle(request).pipe(
-    //     timeout(timeoutValueNumeric),
-    //     //tap((event: HttpResponse<any>) => event),
-    //     tap((event: any) => {
-    //       return event;
-    //     }),
-    //     catchError((error: HttpErrorResponse) => this.networkErrorScenario(error, request, next))
-    //   );
-    // } else {
-    //   return next.handle(this.addToken(request)).pipe(
-    //     timeout(timeoutValueNumeric),
-    //     tap((response: any) => {
-    //       if (response.type !== 0) {
-    //         const token = response.headers.get('Authorization');
-    //         if (token) {
-    //           localStorage.setItem('hashToken', token.split(' ')[1]);
-    //         }
-    //       }
-    //       return response;
-    //     }),
-    //     catchError((error: HttpErrorResponse) => this.networkErrorScenario(error, request, next))
-    //   );
-    // }
-
     return this.addTokenAndHandle(request, next, timeoutValueNumeric);
   }
 
@@ -80,69 +41,8 @@ export class HttpInterceptorService implements HttpInterceptor {
     return next.handle(modifiedRequest).pipe(
       timeout(timeoutValueNumeric),
       catchError((error: HttpErrorResponse) => this.networkErrorScenario(error, request, next))
-      // tap((response: any) => {
-        // if (response.type !== 0) {
-        //   const token = response.headers.get('Authorization');
-        //   if (token) {
-        //     localStorage.setItem('hashToken', token.split(' ')[1]);
-        //   }
-        // }
-        // return response;
-      // }),
-      // catchError((error: HttpErrorResponse) => this.networkErrorScenario(error, request, next))
     ) as Observable<HttpEvent<any>>;
   }
-
-
-
-  // addToken(req: HttpRequest<any>): HttpRequest<any> {
-  
-  //   if(localStorage.getItem("userData")){
-  //     console.log(localStorage.getItem("userData"));
-  //     const local_user: any = localStorage.getItem("userData");
-  //     const userData = JSON.parse(local_user);
-      
-  //   if (userData && userData.data && userData.data.api_token) {
-  //   const accessToken = userData.data.api_token;
-  //   if (accessToken) {
-  //     // return req.clone({
-  //     //   setHeaders: {
-  //     //     'Authorization':  `Bearer ${accessToken}`,
-  //     //     'Content-Type': 'application/json'
-  //     //   }         
-  //     // });
-  //     const headers = req.headers.set('Authorization', `Bearer ${accessToken}`).set('Access-Control-Allow-Origin', '*');
-  //     console.log(headers);
-  //     return req.clone({ headers });  
-  //   } else {
-  //     return req;
-  //   }
-  // }
-  // }
-  //   return req;
-  // // }
-  // addToken(req: HttpRequest<any>): HttpRequest<any> {
-  //   const localUser = localStorage.getItem("userData");
-  //   if (localUser) {
-  //     const userData = JSON.parse(localUser);
-  //     if (userData.data && userData.data.api_token) {
-  //       const accessToken = userData.data.api_token;
-  
-  //       // Check if the token is expired
-  //       const tokenExpiration = userData.data.token_expiration;
-  //       if (tokenExpiration && new Date(tokenExpiration) > new Date()) {
-  //         const headers = req.headers
-  //           .set('Authorization', `Bearer ${accessToken}`)
-  //           .set('Access-Control-Allow-Origin', '*');
-  //         return req.clone({ headers });
-  //       } else {
-  //         // Token is expired, handle the refresh logic or log out the user
-  //         // Example: this.login.logout();
-  //       }
-  //     }
-  //   }
-  //   return req;
-  // }
 
   private addToken(req: HttpRequest<any>): HttpRequest<any> {
     if (localStorage.getItem('userData')) {
@@ -199,8 +99,11 @@ export class HttpInterceptorService implements HttpInterceptor {
 
     handle401Error(error: HttpErrorResponse): any {
       if (error && error.status === 401) {
+        this.loader.dismissLoader();
         this.login.logout();
         console.log(error,"errorr");
+        localStorage.clear();
+        localStorage.removeItem('userData');
         return throwError(error);    
       }
 
@@ -217,11 +120,8 @@ export class HttpInterceptorService implements HttpInterceptor {
       return throwError(error);
     }
   
-    // eslint-disable-next-line @typescript-eslint/member-ordering
     handle403Error(error: HttpErrorResponse): Observable<HttpEvent<any>> {
       if (error && error.status === 403) {
-        // this.toastService.showError(error.error.message, error.statusText);
-        // this.auth.logout();
         return throwError(error);
       }
   
@@ -230,16 +130,9 @@ export class HttpInterceptorService implements HttpInterceptor {
     handle404Error(error: HttpErrorResponse): Observable<HttpEvent<any>> {
       console.log("error", error);
       if (error && error.status === 404) {
-        // this.toastService.showError(error.error.message, error.statusText);
-        // this.auth.logout();
         return throwError(error);
       }
   
       return throwError(error);
     }
-
-    // eslint-disable-next-line @typescript-eslint/member-ordering
-    // apiWithNoHeaders(request: HttpRequest<any>): boolean {
-    //   return apiWithoutHeader.includes(request.url as never);
-    // }
 }

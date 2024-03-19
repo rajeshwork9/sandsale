@@ -41,20 +41,19 @@ export class RejectedlistPage implements OnInit {
   }
 
   ngOnInit() { 
-    this.shared.locations.subscribe((obj: any)=>{
-      console.log("iddjhg",obj);
-    })
-   this.locationIdInfo = localStorage.getItem('locationId');
-  console.log("locationIdInfo", this.locationIdInfo);
-  this.locationName = localStorage.getItem('locationName');
-  console.log("locationName", this.locationName);
-    this.rejectedList();
-
+  //  this.locationIdInfo = localStorage.getItem('locationId');
+  //  console.log("locationIdInfo", this.locationIdInfo);
+  //  this.rejectedList();
   }
 
-  // cardClickAction() {
-  //   this.router.navigate(['/completeddetails']);
-  // }
+  ionViewWillEnter(){
+    this.locationIdInfo = localStorage.getItem('locationId');
+    this.locationName = localStorage.getItem('locationName');
+    console.log("locationName",this.locationName);
+    console.log("locationIdInfo", this.locationIdInfo);
+    this.rejectedList();
+  }
+
 
   async rejectedList() {
     await this.loader.showLoader();

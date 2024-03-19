@@ -45,20 +45,16 @@ export class CompletedlistPage implements OnInit {
   }
 
   ngOnInit() {
-    this.locationIdInfo = localStorage.getItem('locationId');
-    console.log('locationIdInfo', this.locationIdInfo);
-    this.locationName = localStorage.getItem('locationName');
-    console.log("locationName", this.locationName);
-    this.shared.locations.subscribe((obj: any)=>{
-      console.log("iddjhg",obj);
-    })
-    this.completedList();
-    this.locationDetails();
+    // this.locationIdInfo = localStorage.getItem('locationId');
+    // this.completedList();
   }
 
-  // cardClickAction() {
-  //   this.router.navigate(['/completeddetails',data.trip_id]);
-  // }
+  ionViewWillEnter(){
+    this.locationIdInfo = localStorage.getItem('locationId');
+    this.locationName = localStorage.getItem('locationName');
+    this.completedList();
+  }
+
 
   async completedList() {
     await this.loader.showLoader();
@@ -133,7 +129,6 @@ export class CompletedlistPage implements OnInit {
 locationColumns: any = [
   'id',
   'location_name',
-  'location_anpr',
   'status',
   'created_on',
 ];
@@ -143,17 +138,15 @@ locationOrder: any = {
 locationFilter: any = {};
 
 async locationDetails() {
-  // await this.loader.showLoader();
-
+  await this.loader.showLoader();
   let payload = {
     columns: this.locationColumns,
     order_by: this.locationOrder,
     filters: this.locationFilter,
   };
-
   this.common.getLocations(payload).subscribe((resp: any) => {
+    this.loader.dismissLoader();
     this.locationData = resp.data;
-
   });
 }
 //End location

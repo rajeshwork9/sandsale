@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="backButton()" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>location</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">location</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+  <ion-card *ngFor="let data of locationData">
+    <ion-button (click)="onLocationChange(data.id, data.location_name)">{{data.location_name}} </ion-button>
+  </ion-card>
+</ion-content>
+

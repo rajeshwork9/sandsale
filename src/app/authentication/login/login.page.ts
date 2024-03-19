@@ -23,7 +23,7 @@ export class LoginPage implements OnInit {
   ) { 
     let userInfo:any = localStorage.getItem("userData");
     if(userInfo){
-      this.router.navigate(['home'])
+      this.router.navigate(['location'])
       // this.loader.dismissLoader()
     }
     const PAT_EMAIL = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,4}$";
