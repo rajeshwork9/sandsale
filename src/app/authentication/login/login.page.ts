@@ -71,7 +71,7 @@ export class LoginPage implements OnInit {
       this.loginForm.reset()
       this.submitted = false; 
       console.log("response login", resp)
-      this.router.navigate(['home'])
+      this.router.navigate(['location'])
     }
     else{
       this.loader.dismissLoader();
